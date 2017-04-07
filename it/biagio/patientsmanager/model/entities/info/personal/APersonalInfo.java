@@ -64,6 +64,7 @@ public abstract class APersonalInfo extends AInfo
 	 * @param birthdate - the birthdate
 	 * @param isMale - true if the gender is male, false if it's female
 	 * @param taxcode - the taxcode
+	 * @throws IllegalArgumentException - if surname or name are null or empty
 	 */
 	public APersonalInfo(String surname, String name, Date birthdate, boolean isMale, String taxcode) {
 		setSurname(surname);
@@ -79,11 +80,12 @@ public abstract class APersonalInfo extends AInfo
 	 * Set the surname
 	 * 
 	 * @param surname - the surname (can't be null/empty)
+	 * @throws IllegalArgumentException - if surname is null or empty
 	 */
 	public void setSurname(String surname) {
 		if (isEmptyString(surname))
 			throw new IllegalArgumentException(
-				"Specificare un cognome"
+				"cognome non presente"
 			);
 		this.surname = surname;
 	}
@@ -92,11 +94,12 @@ public abstract class APersonalInfo extends AInfo
 	 * Set the name
 	 * 
 	 * @param name - the name (can't be null/empty)
+	 * @throws IllegalArgumentException - if name is null or empty
 	 */
 	public void setName(String name) {
 		if (isEmptyString(name))
 			throw new IllegalArgumentException(
-				"Specificare un nome"
+				"nome non presente"
 			);
 		this.name = name;
 	}

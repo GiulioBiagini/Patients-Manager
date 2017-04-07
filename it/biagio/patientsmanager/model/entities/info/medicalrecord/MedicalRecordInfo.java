@@ -56,8 +56,9 @@ public class MedicalRecordInfo extends AInfo
 	 * @param type - the type of medical record (can't be null/empty)
 	 * @param number - the medical record number (can't be null/empty)
 	 * @param lastVisitDate - the date of the last visit, null if none visit has been done
+	 * @throws IllegalArgumentException - if type or number are null or empty
 	 */
-	public MedicalRecordInfo(String type, String number, Date lastVisitDate) {
+	public MedicalRecordInfo(String type, String number, Date lastVisitDate) throws IllegalArgumentException {
 		setType(type);
 		setNumber(number);
 		setLastVisitDate(lastVisitDate);
@@ -69,11 +70,12 @@ public class MedicalRecordInfo extends AInfo
 	 * Set the type of medical record
 	 * 
 	 * @param type - the type of medical record (can't be null/empty)
+	 * @throws IllegalArgumentException - if type is null or empty
 	 */
-	public void setType(String type) {
+	public void setType(String type) throws IllegalArgumentException {
 		if (isEmptyString(type))
 			throw new IllegalArgumentException(
-				"Specificare una tipologia per la cartella clinica"
+				"tipologia della cartella non presente"
 			);
 		this.type = type;
 	}
@@ -82,11 +84,12 @@ public class MedicalRecordInfo extends AInfo
 	 * Ste the medical record number
 	 * 
 	 * @param number - the medical record number (can't be null/empty)
+	 * @throws IllegalArgumentException - if number is null or empty
 	 */
-	public void setNumber(String number) {
+	public void setNumber(String number) throws IllegalArgumentException {
 		if (isEmptyString(number))
 			throw new IllegalArgumentException(
-				"Specificare un numero per la cartella clinica"
+				"numero della cartella clinica non presente"
 			);
 		this.number = number.toUpperCase();
 	}

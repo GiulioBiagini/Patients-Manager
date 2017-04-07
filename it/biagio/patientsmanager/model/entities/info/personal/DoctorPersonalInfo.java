@@ -51,6 +51,7 @@ public class DoctorPersonalInfo extends APersonalInfo
 	 * @param isMale - if the gender is male
 	 * @param taxcode - the taxcode
 	 * @param specialization - the specialization
+	 * @throws IllegalArgumentException - if surname or name are null or empty
 	 */
 	public DoctorPersonalInfo(String surname, String name, Date birthdate, boolean isMale, String taxcode, String specialization) {
 		super(surname, name, birthdate, isMale, taxcode);

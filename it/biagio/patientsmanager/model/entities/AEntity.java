@@ -61,8 +61,10 @@ public abstract class AEntity
 	 * @param personalInfo - the info related to the personal data (can't be null)
 	 * @param addressInfo - the info related to the address (can't be null)
 	 * @param contactsInfo - the info related to the contacts (can't be null)
+	 * @throws IllegalArgumentException - if info related to account, personal data,
+	 * address and contacts are null
 	 */
-	public AEntity(AccountInfo accountInfo, APersonalInfo personalInfo, AddressInfo addressInfo, ContactsInfo contactsInfo) {
+	public AEntity(AccountInfo accountInfo, APersonalInfo personalInfo, AddressInfo addressInfo, ContactsInfo contactsInfo) throws IllegalArgumentException {
 		setAccountInfo(accountInfo);
 		setPersonalInfo(personalInfo);
 		setAddressInfo(addressInfo);
@@ -75,11 +77,12 @@ public abstract class AEntity
 	 * Set the info related to the account management
 	 * 
 	 * @param accountInfo - the info related to the account management (can't be null)
+	 * @throws IllegalArgumentException - if info related to account is null
 	 */
-	public void setAccountInfo(AccountInfo accountInfo) {
+	public void setAccountInfo(AccountInfo accountInfo) throws IllegalArgumentException {
 		if (accountInfo == null)
 			throw new IllegalArgumentException(
-				"Specificare le informazioni relative all'account"
+				"informazioni relative all'account non presenti"
 			);
 		this.accountInfo = accountInfo;
 	}
@@ -88,11 +91,12 @@ public abstract class AEntity
 	 * Set the info related to the personal data
 	 * 
 	 * @param personalInfo - the info related to the personal data (can't be null)
+	 * @throws IllegalArgumentException - if info related to personal data is null
 	 */
-	public void setPersonalInfo(APersonalInfo personalInfo) {
+	public void setPersonalInfo(APersonalInfo personalInfo) throws IllegalArgumentException {
 		if (personalInfo == null)
 			throw new IllegalArgumentException(
-				"Specificare le informazioni personali"
+				"informazioni personali non presenti"
 			);
 		this.personalInfo = personalInfo;
 	}
@@ -101,11 +105,12 @@ public abstract class AEntity
 	 * Set the info related to the address
 	 * 
 	 * @param addressInfo - the info related to the address (can't be null)
+	 * @throws IllegalArgumentException - if info related to address is null
 	 */
-	public void setAddressInfo(AddressInfo addressInfo) {
+	public void setAddressInfo(AddressInfo addressInfo) throws IllegalArgumentException {
 		if (addressInfo == null)
 			throw new IllegalArgumentException(
-				"Specificare le informazioni relative all'indirizzo"
+				"informazioni relative all'indirizzo non presenti"
 			);
 		this.addressInfo = addressInfo;
 	}
@@ -114,11 +119,12 @@ public abstract class AEntity
 	 * Set the info related to the contacts
 	 * 
 	 * @param contactsInfo - the info related to the contacts (can't be null)
+	 * @throws IllegalArgumentException - if info related to contacts is null
 	 */
-	public void setContactsInfo(ContactsInfo contactsInfo) {
+	public void setContactsInfo(ContactsInfo contactsInfo) throws IllegalArgumentException {
 		if (contactsInfo == null)
 			throw new IllegalArgumentException(
-				"Specificare le informazioni relative ai contatti"
+				"informazioni relative ai contatti non presenti"
 			);
 		this.contactsInfo = contactsInfo;
 	}

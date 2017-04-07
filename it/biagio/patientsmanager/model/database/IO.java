@@ -31,7 +31,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.HashMap;
 
@@ -55,239 +54,146 @@ import it.biagio.patientsmanager.utils.DateConverter;
  */
 public class IO
 {
-	private static final String LOG_CLASS_NAME = IO.class.getName();
-	
-	private static final String LOG_PATIENT_CREATION = "patient creation";
-	
-	private static final String LOG_DOCTOR_CREATION = "doctor creation";
-	
-	private static final String LOG_PATIENT_DELETION = "patient deletion";
-	
-	private static final String LOG_DOCTOR_DELETION = "doctor deletion";
-	
-	private static final String LOG_PATIENT_READING = "patient reading";
-	
-	private static final String LOG_DOCTOR_READING = "doctor reading";
-	
-	
-	
+	/**
+	 * String for line separator
+	 */
 	private static final String LINE_SEPARATOR = System.lineSeparator();
 	
 	
 	
+	/**
+	 * The string to write if patient/doctor is male
+	 */
 	private static final String MALE = "m";
 	
+	/**
+	 * The string to write if patient/doctor is female
+	 */
 	private static final String FEMALE = "f";
 	
 	
 	
 	/*
-	 * CREATE PATIENT/DOCTOR
+	 * WRITE PATIENT/DOCTOR
 	 */
 	
+	
+	
 	/**
-	 * Create a file and store the info related to the patient
+	 * Create a file and store the info related to the patient (overwrite
+	 * it if already exists)
 	 * 
 	 * @param patient - the patient to save
-	 * @param referringPhysician - the data related to the referring physician
-	 * @param fileName - the name of the file into which save the patient's info
-	 * @param directory - the directory into which create the file
-	 * @return true if the patient has been correctly saved, false otherwise (check log)
-	 * @throws IOException - if an I/O error occurs while writing the patient's data
+	 * @param referringPhysicianId - the id to write as info for the referring physician
+	 * @param file - the file into which save the patient's info
+	 * @throws IOException - if an error occurs while writing the patient's data
 	 */
-	public static boolean createPatient(Patient patient, String referringPhysician, String fileName, File directory) throws IOException {
+	public static void writePatient(Patient patient, String referringPhysicianId, File file) throws IOException {
 		if (patient == null)
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_CREATION, "null patient");
-		else if (fileName == null)
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_CREATION, "null filename");
-		else if (fileName.isEmpty())
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_CREATION, "empty filename");
-		else if (!directory.exists())
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_CREATION, "directory " + directory.getAbsolutePath() + " does not exist");
-		else if (!directory.isDirectory())
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_CREATION, "directory " + directory.getAbsolutePath() + " is not a folder");
-		else {
-			File file = new File(directory, fileName);
-			
-			if (file.isFile())
-				Log.w(LOG_CLASS_NAME, LOG_PATIENT_CREATION, "file " + file.getAbsolutePath() + " already exists (will be overwritten)");
-			
-			try {
-				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-				
-				// account info
-				AccountInfo accountInfo = patient.getAccountInfo();
-				bufferedWriter.write(DateConverter.dateToString(accountInfo.getCreationDate()) + LINE_SEPARATOR);
-				bufferedWriter.write(DateConverter.dateToString(accountInfo.getClosingDate()) + LINE_SEPARATOR);
-				// personal info
-				PatientPersonalInfo personalInfo = patient.getPersonalInfo();
-				bufferedWriter.write(personalInfo.getSurname().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(personalInfo.getName().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(DateConverter.dateToString(personalInfo.getBirthdate()) + LINE_SEPARATOR);
-				bufferedWriter.write((personalInfo.isMale() ? MALE : FEMALE) + LINE_SEPARATOR);
-				bufferedWriter.write(personalInfo.getTaxcode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(personalInfo.getProfession().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				// medical record info
-				MedicalRecordInfo medicalRecordInfo = patient.getMedicalRecordInfo();
-				bufferedWriter.write(medicalRecordInfo.getType().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(medicalRecordInfo.getNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(DateConverter.dateToString(medicalRecordInfo.getLastVisitDate()) + LINE_SEPARATOR);
-				// address info
-				AddressInfo addressInfo = patient.getAddressInfo();
-				bufferedWriter.write(addressInfo.getAddress().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(addressInfo.getCivicNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(addressInfo.getCity().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(addressInfo.getZipCode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(addressInfo.getProvince().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				// contacts info
-				ContactsInfo contactsInfo = patient.getContactsInfo();
-				bufferedWriter.write(contactsInfo.getTelephoneNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(contactsInfo.getMobileNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				// doctor info
-				bufferedWriter.write((referringPhysician == null ? "" : referringPhysician) + LINE_SEPARATOR);
-				// problems info
-				ProblemsInfo problemsInfo = patient.getProblemsInfo();
-				bufferedWriter.write(problemsInfo.getHeartProblems());
-				
-				bufferedWriter.close();
-				
-				Log.i(LOG_CLASS_NAME, LOG_PATIENT_CREATION, "file " + file.getAbsolutePath() + " created");
-				
-				return true;
-			} catch (Exception ex) {
-				Log.e(LOG_CLASS_NAME, LOG_PATIENT_CREATION, "unable to write the patient's data on " + file.getAbsolutePath() + ": " + ex.getMessage());
-				throw ex;
-			}
-		}
+			throw new IOException("impossibile scrivere i dati del paziente", "paziente nullo");
+		if (file == null)
+			throw new IOException("impossibile scrivere i dati del paziente", "file nullo");
+		if (file.exists() && !file.isFile())
+			throw new IOException("impossibile scrivere i dati del paziente", "file non regolare con lo stesso nome già esistente");
 		
-		return false;
+		try {
+			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+			
+			// account info
+			AccountInfo accountInfo = patient.getAccountInfo();
+			bufferedWriter.write(DateConverter.dateToString(accountInfo.getCreationDate()) + LINE_SEPARATOR);
+			bufferedWriter.write(DateConverter.dateToString(accountInfo.getClosingDate()) + LINE_SEPARATOR);
+			// personal info
+			PatientPersonalInfo personalInfo = patient.getPersonalInfo();
+			bufferedWriter.write(personalInfo.getSurname().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getName().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(DateConverter.dateToString(personalInfo.getBirthdate()) + LINE_SEPARATOR);
+			bufferedWriter.write((personalInfo.isMale() ? MALE : FEMALE) + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getTaxcode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getProfession().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			// medical record info
+			MedicalRecordInfo medicalRecordInfo = patient.getMedicalRecordInfo();
+			bufferedWriter.write(medicalRecordInfo.getType().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(medicalRecordInfo.getNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(DateConverter.dateToString(medicalRecordInfo.getLastVisitDate()) + LINE_SEPARATOR);
+			// address info
+			AddressInfo addressInfo = patient.getAddressInfo();
+			bufferedWriter.write(addressInfo.getAddress().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getCivicNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getCity().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getZipCode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getProvince().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			// contacts info
+			ContactsInfo contactsInfo = patient.getContactsInfo();
+			bufferedWriter.write(contactsInfo.getTelephoneNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(contactsInfo.getMobileNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			// doctor info
+			bufferedWriter.write((referringPhysicianId == null ? "" : referringPhysicianId) + LINE_SEPARATOR);
+			// problems info
+			ProblemsInfo problemsInfo = patient.getProblemsInfo();
+			bufferedWriter.write(problemsInfo.getHeartProblems());
+			
+			bufferedWriter.close();
+		} catch (IllegalArgumentException ex) {
+			throw new IOException("impossibile scrivere i dati del paziente", ex.getMessage());
+		} catch (java.io.IOException ex) {
+			throw new IOException("impossibile scrivere i dati del paziente (errore di input/output)", ex.getMessage());
+		} catch (Exception ex) {
+			throw new IOException("impossibile scrivere i dati del paziente (errore sconosciuto)", ex.getMessage());
+		}
 	}
 	
 	/**
-	 * Create a file and store the info related to the doctor
+	 * Create a file and store the info related to the doctor (overwrite
+	 * it if already exists)
 	 * 
 	 * @param doctor - the doctor to save
-	 * @param fileName - the name of the file into which save the doctor's info
-	 * @param directory - the directory into which create the file
-	 * @return true if the doctor has been correctly saved, false otherwise (check log)
-	 * @throws IOException - if an I/O error occurs while writing the doctor's data
+	 * @param file - the file into which save the doctor's info
+	 * @throws IOException - if an error occurs while writing the doctor's data
 	 */
-	public static boolean createDoctor(Doctor doctor, String fileName, File directory) throws IOException {
+	public static void writeDoctor(Doctor doctor, File file) throws IOException {
 		if (doctor == null)
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_CREATION, "null doctor");
-		else if (fileName == null)
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_CREATION, "null filename");
-		else if (fileName.isEmpty())
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_CREATION, "empty filename");
-		else if (!directory.exists())
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_CREATION, "directory " + directory.getAbsolutePath() + " does not exist");
-		else if (!directory.isDirectory())
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_CREATION, "directory " + directory.getAbsolutePath() + " is not a folder");
-		else {
-			File file = new File(directory, fileName);
-			
-			if (file.isFile())
-				Log.w(LOG_CLASS_NAME, LOG_DOCTOR_CREATION, "file " + file.getAbsolutePath() + " already exists (will be overwritten)");
-			
-			try {
-				BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
-				
-				// account info
-				AccountInfo accountInfo = doctor.getAccountInfo();
-				bufferedWriter.write(DateConverter.dateToString(accountInfo.getCreationDate()) + LINE_SEPARATOR);
-				bufferedWriter.write(DateConverter.dateToString(accountInfo.getClosingDate()) + LINE_SEPARATOR);
-				// personal info
-				DoctorPersonalInfo personalInfo = doctor.getPersonalInfo();
-				bufferedWriter.write(personalInfo.getSurname().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(personalInfo.getName().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(DateConverter.dateToString(personalInfo.getBirthdate()) + LINE_SEPARATOR);
-				bufferedWriter.write((personalInfo.isMale() ? MALE : FEMALE) + LINE_SEPARATOR);
-				bufferedWriter.write(personalInfo.getTaxcode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(personalInfo.getSpecialization().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				// address info
-				AddressInfo addressInfo = doctor.getAddressInfo();
-				bufferedWriter.write(addressInfo.getAddress().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(addressInfo.getCivicNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(addressInfo.getCity().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(addressInfo.getZipCode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(addressInfo.getProvince().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				// contacts info
-				ContactsInfo contactsInfo = doctor.getContactsInfo();
-				bufferedWriter.write(contactsInfo.getTelephoneNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-				bufferedWriter.write(contactsInfo.getMobileNumber().replace("\r", "").replace("\n", ""));
-				
-				bufferedWriter.close();
-				
-				Log.i(LOG_CLASS_NAME, LOG_DOCTOR_CREATION, "file " + file.getAbsolutePath() + " created");
-				
-				return true;
-			} catch (Exception ex) {
-				Log.e(LOG_CLASS_NAME, LOG_DOCTOR_CREATION, "unable to write the doctor's data on " + file.getAbsolutePath() + ": " + ex.getMessage());
-				throw ex;
-			}
-		}
+			throw new IOException("impossibile scrivere i dati del medico", "paziente nullo");
+		if (file == null)
+			throw new IOException("impossibile scrivere i dati del medico", "file nullo");
+		if (file.exists() && !file.isFile())
+			throw new IOException("impossibile scrivere i dati del medico", "file non regolare con lo stesso nome già esistente");
 		
-		return false;
-	}
-	
-	
-	
-	/*
-	 * DELETE PATIENT/DOCTOR
-	 */
-	
-	public static boolean deletePatient(String fileName, File directory) {
-		if (fileName == null)
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_DELETION, "null filename");
-		else if (fileName.isEmpty())
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_DELETION, "empty filename");
-		else if (!directory.exists())
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_DELETION, "directory " + directory.getAbsolutePath() + " does not exist");
-		else if (!directory.isDirectory())
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_DELETION, "directory " + directory.getAbsolutePath() + " is not a folder");
-		else {
-			File file = new File(directory, fileName);
+		try {
+			BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
 			
-			if (!file.exists())
-				Log.e(LOG_CLASS_NAME, LOG_PATIENT_DELETION, "file " + file.getAbsolutePath() + " does not exist");
-			else if (!file.isFile())
-				Log.e(LOG_CLASS_NAME, LOG_PATIENT_DELETION, "file " + file.getAbsolutePath() + " is not a regular file");
-			else if (!file.delete())
-				Log.e(LOG_CLASS_NAME, LOG_PATIENT_DELETION, "unable to delete file " + file.getAbsolutePath());
-			else {
-				Log.i(LOG_CLASS_NAME, LOG_PATIENT_DELETION, "file " + file.getAbsolutePath() + " deleted");
-				return true;
-			}
-		}
-		
-		return false;
-	}
-	
-	public static boolean deleteDoctor(String fileName, File directory) {
-		if (fileName == null)
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_DELETION, "null filename");
-		else if (fileName.isEmpty())
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_DELETION, "empty filename");
-		else if (!directory.exists())
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_DELETION, "directory " + directory.getAbsolutePath() + " does not exist");
-		else if (!directory.isDirectory())
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_DELETION, "directory " + directory.getAbsolutePath() + " is not a folder");
-		else {
-			File file = new File(directory, fileName);
+			// account info
+			AccountInfo accountInfo = doctor.getAccountInfo();
+			bufferedWriter.write(DateConverter.dateToString(accountInfo.getCreationDate()) + LINE_SEPARATOR);
+			bufferedWriter.write(DateConverter.dateToString(accountInfo.getClosingDate()) + LINE_SEPARATOR);
+			// personal info
+			DoctorPersonalInfo personalInfo = doctor.getPersonalInfo();
+			bufferedWriter.write(personalInfo.getSurname().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getName().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(DateConverter.dateToString(personalInfo.getBirthdate()) + LINE_SEPARATOR);
+			bufferedWriter.write((personalInfo.isMale() ? MALE : FEMALE) + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getTaxcode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getSpecialization().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			// address info
+			AddressInfo addressInfo = doctor.getAddressInfo();
+			bufferedWriter.write(addressInfo.getAddress().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getCivicNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getCity().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getZipCode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getProvince().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			// contacts info
+			ContactsInfo contactsInfo = doctor.getContactsInfo();
+			bufferedWriter.write(contactsInfo.getTelephoneNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(contactsInfo.getMobileNumber().replace("\r", "").replace("\n", ""));
 			
-			if (!file.exists())
-				Log.e(LOG_CLASS_NAME, LOG_DOCTOR_DELETION, "file " + file.getAbsolutePath() + " does not exist");
-			else if (!file.isFile())
-				Log.e(LOG_CLASS_NAME, LOG_DOCTOR_DELETION, "file " + file.getAbsolutePath() + " is not a regular file");
-			else if (!file.delete())
-				Log.e(LOG_CLASS_NAME, LOG_DOCTOR_DELETION, "unable to delete the file " + file.getAbsolutePath());
-			else {
-				Log.i(LOG_CLASS_NAME, LOG_DOCTOR_DELETION, "file " + file.getAbsolutePath() + " deleted");
-				return true;
-			}
+			bufferedWriter.close();
+		} catch (IllegalArgumentException ex) {
+			throw new IOException("impossibile scrivere i dati del medico", ex.getMessage());
+		} catch (java.io.IOException ex) {
+			throw new IOException("impossibile scrivere i dati del medico (errore di input/output)", ex.getMessage());
+		} catch (Exception ex) {
+			throw new IOException("impossibile scrivere i dati del medico (errore sconosciuto)", ex.getMessage());
 		}
-		
-		return false;
 	}
 	
 	
@@ -296,131 +202,182 @@ public class IO
 	 * READ PATIENT/DOCTOR
 	 */
 	
+	
+	
 	/**
+	 * Read the patient's info stored in the related file
 	 * 
-	 * @param file
-	 * @param referringPhysicians
-	 * @return
-	 * @throws IOException
+	 * @param file - the file to read
+	 * @param referringPhysicians - a list of doctors: search if the info related
+	 * to the referring physician corresponds to an id in this list and, in this
+	 * case, link the patient with this doctor; otherwise the field referring
+	 * physician in the patient's structure will be set as null
+	 * @return the patient read
+	 * @throws IOException - if an error occurs while reading the patient's data
 	 */
 	public static Patient readPatient(File file, HashMap<String, Doctor> referringPhysicians) throws IOException {
 		if (file == null)
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_READING, "null file");
-		else if (!file.exists())
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_READING, "file " + file.getAbsolutePath() + " does not exist");
-		else if (!file.isFile())
-			Log.e(LOG_CLASS_NAME, LOG_PATIENT_READING, "file " + file.getAbsolutePath() + " is not a regular file");
-		else {
-			
-			try {
-				BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-				
-				AccountInfo accountInfo = new AccountInfo(
-					DateConverter.stringToDate(bufferedReader.readLine()),// creationDate
-					DateConverter.stringToDate(bufferedReader.readLine())// closingDate
-				);
-				PatientPersonalInfo personalInfo = new PatientPersonalInfo(
-					bufferedReader.readLine(),// surname
-					bufferedReader.readLine(),// name
-					DateConverter.stringToDate(bufferedReader.readLine()),// birthdate
-					bufferedReader.readLine().equals(MALE),// isMale
-					bufferedReader.readLine(),// taxcode
-					bufferedReader.readLine()// profession
-				);
-				MedicalRecordInfo medicalRecordInfo = new MedicalRecordInfo(
-					bufferedReader.readLine(),// type
-					bufferedReader.readLine(),// number
-					DateConverter.stringToDate(bufferedReader.readLine())// lastVisitDate
-				);
-				AddressInfo addressInfo = new AddressInfo(
-					bufferedReader.readLine(),// address
-					bufferedReader.readLine(),// civicNumber
-					bufferedReader.readLine(),// city
-					bufferedReader.readLine(),// zipCode
-					bufferedReader.readLine()// province
-				);
-				ContactsInfo contactsInfo = new ContactsInfo(
-					bufferedReader.readLine(),// telephoneNumber
-					bufferedReader.readLine()// mobileNumber
-				);
-				Doctor referringPhysician = referringPhysicians.get(bufferedReader.readLine());// referringPhysician
-				// heart problems
-				String heartProblems = bufferedReader.readLine();
-				while (bufferedReader.ready())
-					heartProblems += LINE_SEPARATOR + bufferedReader.readLine();
-				ProblemsInfo problemsInfo = new ProblemsInfo(
-					heartProblems
-				);
-				
-				bufferedReader.close();
-				
-				Log.i(LOG_CLASS_NAME, LOG_PATIENT_READING, "file " + file.getAbsolutePath() + " read");
-				
-				return new Patient(accountInfo, personalInfo, medicalRecordInfo, addressInfo, contactsInfo, referringPhysician, problemsInfo);
-			} catch (ParseException ex) {
-				Log.e(LOG_CLASS_NAME, LOG_PATIENT_READING, "unable to read the patient's data from " + file.getAbsolutePath() + ": " + ex.getMessage());
-			} catch (IllegalArgumentException ex) {
-				Log.e(LOG_CLASS_NAME, LOG_PATIENT_READING, "unable to read the patient's data from " + file.getAbsolutePath() + ": " + ex.getMessage());
-			} catch (IOException ex) {
-				Log.e(LOG_CLASS_NAME, LOG_PATIENT_READING, "unable to read the patient's data from " + file.getAbsolutePath() + ": " + ex.getMessage());
-				throw ex;
-			}
-		}
+			throw new IOException("impossibile leggere i dati del paziente", "file nullo");
+		if (file.exists() && !file.isFile())
+			throw new IOException("impossibile leggere i dati del paziente", "file non regolare");
 		
-		return null;
+		try {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+			
+			AccountInfo accountInfo = new AccountInfo(
+				DateConverter.stringToDate(bufferedReader.readLine()),// creationDate
+				DateConverter.stringToDate(bufferedReader.readLine())// closingDate
+			);
+			PatientPersonalInfo personalInfo = new PatientPersonalInfo(
+				bufferedReader.readLine(),// surname
+				bufferedReader.readLine(),// name
+				DateConverter.stringToDate(bufferedReader.readLine()),// birthdate
+				bufferedReader.readLine().equals(MALE),// isMale
+				bufferedReader.readLine(),// taxcode
+				bufferedReader.readLine()// profession
+			);
+			MedicalRecordInfo medicalRecordInfo = new MedicalRecordInfo(
+				bufferedReader.readLine(),// type
+				bufferedReader.readLine(),// number
+				DateConverter.stringToDate(bufferedReader.readLine())// lastVisitDate
+			);
+			AddressInfo addressInfo = new AddressInfo(
+				bufferedReader.readLine(),// address
+				bufferedReader.readLine(),// civicNumber
+				bufferedReader.readLine(),// city
+				bufferedReader.readLine(),// zipCode
+				bufferedReader.readLine()// province
+			);
+			ContactsInfo contactsInfo = new ContactsInfo(
+				bufferedReader.readLine(),// telephoneNumber
+				bufferedReader.readLine()// mobileNumber
+			);
+			Doctor referringPhysician = referringPhysicians.get(bufferedReader.readLine());// referringPhysician
+			// heart problems
+			String heartProblems = bufferedReader.readLine();
+			while (bufferedReader.ready())
+				heartProblems += LINE_SEPARATOR + bufferedReader.readLine();
+			ProblemsInfo problemsInfo = new ProblemsInfo(
+				heartProblems
+			);
+			
+			bufferedReader.close();
+			
+			return new Patient(accountInfo, personalInfo, medicalRecordInfo, addressInfo, contactsInfo, referringPhysician, problemsInfo);
+		} catch (IllegalArgumentException ex) {
+			throw new IOException("impossibile leggere i dati del paziente", ex.getMessage());
+		} catch (ParseException ex) {
+			throw new IOException("impossibile leggere i dati del paziente", "formato date non corretto (" + DateConverter.DATE_FORMAT + ")");
+		} catch (java.io.IOException ex) {
+			throw new IOException("impossibile leggere i dati del paziente (errore di input/output)", ex.getMessage());
+		} catch (Exception ex) {
+			throw new IOException("impossibile leggere i dati del paziente (errore sconosciuto)", ex.getMessage());
+		}
 	}
 	
+	/**
+	 * Read the doctor's info stored in the related file
+	 * 
+	 * @param file - the file to read
+	 * @return the doctor read
+	 * @throws ParseException - if the date stored in the file do not respect the format
+	 * @throws IOException - if an error occurs while reading the doctor's data
+	 */
 	public static Doctor readDoctor(File file) throws IOException {
 		if (file == null)
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_READING, "null file");
-		else if (!file.exists())
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_READING, "file " + file.getAbsolutePath() + " does not exist");
-		else if (!file.isFile())
-			Log.e(LOG_CLASS_NAME, LOG_DOCTOR_READING, "file " + file.getAbsolutePath() + " is not a regular file");
-		else {
-			
-			try {
-				BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
-				
-				AccountInfo accountInfo = new AccountInfo(
-					DateConverter.stringToDate(bufferedReader.readLine()),// creationDate
-					DateConverter.stringToDate(bufferedReader.readLine())// closingDate
-				);
-				DoctorPersonalInfo personalInfo = new DoctorPersonalInfo(
-					bufferedReader.readLine(),// surname
-					bufferedReader.readLine(),// name
-					DateConverter.stringToDate(bufferedReader.readLine()),// birthdate
-					bufferedReader.readLine().equals(MALE),// isMale
-					bufferedReader.readLine(),// taxcode
-					bufferedReader.readLine()// specialization
-				);
-				AddressInfo addressInfo = new AddressInfo(
-					bufferedReader.readLine(),// address
-					bufferedReader.readLine(),// civicNumber
-					bufferedReader.readLine(),// city
-					bufferedReader.readLine(),// zipCode
-					bufferedReader.readLine()// province
-				);
-				ContactsInfo contactsInfo = new ContactsInfo(
-					bufferedReader.readLine(),// telephoneNumber
-					bufferedReader.readLine()// mobileNumber
-				);
-				
-				bufferedReader.close();
-				
-				Log.i(LOG_CLASS_NAME, LOG_DOCTOR_READING, "file " + file.getAbsolutePath() + " read");
-				
-				return new Doctor(accountInfo, personalInfo, addressInfo, contactsInfo);
-			} catch (ParseException ex) {
-				Log.e(LOG_CLASS_NAME, LOG_DOCTOR_READING, "unable to read the doctor's data from " + file.getAbsolutePath() + ": " + ex.getMessage());
-			} catch (IllegalArgumentException ex) {
-				Log.e(LOG_CLASS_NAME, LOG_DOCTOR_READING, "unable to read the doctor's data from " + file.getAbsolutePath() + ": " + ex.getMessage());
-			} catch (IOException ex) {
-				Log.e(LOG_CLASS_NAME, LOG_DOCTOR_READING, "unable to read the doctor's data from " + file.getAbsolutePath() + ": " + ex.getMessage());
-				throw ex;
-			}
-		}
+			throw new IOException("impossibile leggere i dati del medico", "file nullo");
+		if (file.exists() && !file.isFile())
+			throw new IOException("impossibile leggere i dati del medico", "file non regolare");
 		
-		return null;
+		try {
+			BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+			
+			AccountInfo accountInfo = new AccountInfo(
+				DateConverter.stringToDate(bufferedReader.readLine()),// creationDate
+				DateConverter.stringToDate(bufferedReader.readLine())// closingDate
+			);
+			DoctorPersonalInfo personalInfo = new DoctorPersonalInfo(
+				bufferedReader.readLine(),// surname
+				bufferedReader.readLine(),// name
+				DateConverter.stringToDate(bufferedReader.readLine()),// birthdate
+				bufferedReader.readLine().equals(MALE),// isMale
+				bufferedReader.readLine(),// taxcode
+				bufferedReader.readLine()// specialization
+			);
+			AddressInfo addressInfo = new AddressInfo(
+				bufferedReader.readLine(),// address
+				bufferedReader.readLine(),// civicNumber
+				bufferedReader.readLine(),// city
+				bufferedReader.readLine(),// zipCode
+				bufferedReader.readLine()// province
+			);
+			ContactsInfo contactsInfo = new ContactsInfo(
+				bufferedReader.readLine(),// telephoneNumber
+				bufferedReader.readLine()// mobileNumber
+			);
+			
+			bufferedReader.close();
+			
+			return new Doctor(accountInfo, personalInfo, addressInfo, contactsInfo);
+		} catch (IllegalArgumentException ex) {
+			throw new IOException("impossibile leggere i dati del medico", ex.getMessage());
+		} catch (ParseException ex) {
+			throw new IOException("I/O - impossibile leggere i dati del medico", "formato date non corretto (" + DateConverter.DATE_FORMAT + ")");
+		} catch (java.io.IOException ex) {
+			throw new IOException("impossibile leggere i dati del medico (errore di input/output)", ex.getMessage());
+		} catch (Exception ex) {
+			throw new IOException("impossibile leggere i dati del medico (errore sconosciuto)", ex.getMessage());
+		}
+	}
+	
+	
+	
+	/*
+	 * DELETE PATIENT/DOCTOR
+	 */
+	
+	
+	
+	/**
+	 * Delete the the file containing the entity's info
+	 * 
+	 * @param file - the file into which entity's info are stored
+	 * @return true if the file containing the entity's info has been deleted, false otherwise
+	 * @throws IOException - if an error occurs while deleting the entity's data
+	 */
+	private static void deleteEntity(File file, String entityName) throws IOException {
+		if (file == null)
+			throw new IOException("impossibile eliminare il " + entityName, "file nullo");
+		if (!file.exists())
+			throw new IOException("impossibile eliminare il " + entityName, "file inesistente");
+		if (!file.isFile())
+			throw new IOException("impossibile eliminare il " + entityName, "file non regolare");
+		
+		try {
+			if (!file.delete())
+				throw new IOException("impossibile eliminare il " + entityName, "errore sconosciuto");
+		} catch (Exception ex) {
+			throw new IOException("impossibile eliminare il " + entityName + " (errore sconosciuto)", ex.getMessage());
+		}
+	}
+	
+	/**
+	 * Delete the the file containing the patient's info
+	 * 
+	 * @param file - the file into which patient's info are stored
+	 * @throws IOException - if an error occurs while deleting the patient's data
+	 */
+	public static void deletePatient(File file) throws IOException {
+		deleteEntity(file, "paziente");
+	}
+	
+	/**
+	 * Delete the the file containing the doctor's info
+	 * 
+	 * @param file - the file into which doctor's info are stored
+	 * @throws IOException - if an error occurs while deleting the doctor's data
+	 */
+	public static void deleteDoctor(File file) throws IOException {
+		deleteEntity(file, "medico");
 	}
 }

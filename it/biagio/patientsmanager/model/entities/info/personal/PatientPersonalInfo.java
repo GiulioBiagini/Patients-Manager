@@ -51,6 +51,8 @@ public class PatientPersonalInfo extends APersonalInfo
 	 * @param isMale - true if the gender is male, false if it's female
 	 * @param taxcode - the taxcode (can't be null/empty)
 	 * @param profession - the profession (can't be null/empty)
+	 * @throws IllegalArgumentException - if surname, name, taxcode or profession
+	 * are null or empty, if birthdate is null
 	 */
 	public PatientPersonalInfo(String surname, String name, Date birthdate, boolean isMale, String taxcode, String profession) {
 		super(surname, name, birthdate, isMale, taxcode);
@@ -63,12 +65,13 @@ public class PatientPersonalInfo extends APersonalInfo
 	 * Set the birthdate
 	 * 
 	 * @param birthdate - the birthdate (can't be null/empty)
+	 * @throws IllegalArgumentException - if birthdate is null
 	 */
 	@Override
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(Date birthdate) throws IllegalArgumentException {
 		if (birthdate == null)
 			throw new IllegalArgumentException(
-				"Specificare una data di nascita"
+				"data di nascita non presente"
 			);
 		this.birthdate = birthdate;
 	}
@@ -77,12 +80,13 @@ public class PatientPersonalInfo extends APersonalInfo
 	 * Set the taxcode
 	 * 
 	 * @param taxcode - the taxcode (can't be null/empty)
+	 * @throws IllegalArgumentException - if taxcode is null or empty
 	 */
 	@Override
 	public void setTaxcode(String taxcode) {
 		if (isEmptyString(taxcode))
 			throw new IllegalArgumentException(
-				"Specificare un codice fiscale"
+				"codice fiscale non presente"
 			);
 		this.taxcode = taxcode.toUpperCase();
 	}
@@ -91,11 +95,12 @@ public class PatientPersonalInfo extends APersonalInfo
 	 * Set the profession
 	 * 
 	 * @param profession - the profession (can't be null/empty)
+	 * @throws IllegalArgumentException - if profession is null
 	 */
 	public void setProfession(String profession) {
 		if (isEmptyString(profession))
 			throw new IllegalArgumentException(
-				"Specificare una professione"
+				"professione non presente"
 			);
 		this.profession = profession;
 	}

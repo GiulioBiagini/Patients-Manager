@@ -47,8 +47,10 @@ public class Doctor extends AEntity
 	 * @param personalInfo - the info related to the doctor's personal data (can't be null)
 	 * @param addressInfo - the info related to the address (can't be null)
 	 * @param contactsInfo - the info related to the contacts (can't be null)
+	 * @throws IllegalArgumentException - if info related to account, personal data,
+	 * address and contacts are null
 	 */
-	public Doctor(AccountInfo accountInfo, DoctorPersonalInfo personalInfo, AddressInfo addressInfo, ContactsInfo contactsInfo) {
+	public Doctor(AccountInfo accountInfo, DoctorPersonalInfo personalInfo, AddressInfo addressInfo, ContactsInfo contactsInfo) throws IllegalArgumentException {
 		super(accountInfo, personalInfo, addressInfo, contactsInfo);
 	}
 	
@@ -69,7 +71,7 @@ public class Doctor extends AEntity
 	@Override
 	public String toString() {
 		DoctorPersonalInfo personalInfo = getPersonalInfo();
-		return personalInfo.getSurname() + personalInfo.getName() +
+		return personalInfo.getSurname() + " " + personalInfo.getName() +
 			(((DoctorPersonalInfo) personalInfo).getSpecialization().isEmpty() ? "" : " (" + ((DoctorPersonalInfo) personalInfo).getSpecialization() + ")");
 	}
 }

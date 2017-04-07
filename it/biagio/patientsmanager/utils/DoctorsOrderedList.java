@@ -22,7 +22,7 @@
 
 
 
-package it.biagio.patientsmanager.model.utils;
+package it.biagio.patientsmanager.utils;
 
 
 

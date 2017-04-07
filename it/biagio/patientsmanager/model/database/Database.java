@@ -27,14 +27,14 @@ package it.biagio.patientsmanager.model.database;
 
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import it.biagio.patientsmanager.model.entities.Doctor;
 import it.biagio.patientsmanager.model.entities.Patient;
-import it.biagio.patientsmanager.model.utils.DoctorsOrderedList;
-import it.biagio.patientsmanager.model.utils.PatientsOrderedList;
+import it.biagio.patientsmanager.utils.DoctorsOrderedList;
+import it.biagio.patientsmanager.utils.PatientsOrderedList;
 
 
 
@@ -45,26 +45,33 @@ import it.biagio.patientsmanager.model.utils.PatientsOrderedList;
  */
 public class Database
 {
-	private static final String LOG_CLASS_NAME = IO.class.getName();
-	
-	private static final String LOG_DATABASE_INIT = "database init";
-	
-	
-	
+	/**
+	 * The directory of the database
+	 */
 	private static final File DATABASE_DIR = new File("." + File.separator + "database");
 	
+	/**
+	 * The directory where the patients are stored
+	 */
 	private static final File PATIENTS_DIR = new File(DATABASE_DIR + File.separator + "patients");
 	
+	/**
+	 * The directory where the doctors are stored
+	 */
 	private static final File DOCTORS_DIR = new File(DATABASE_DIR + File.separator + "doctors");
 	
 	
 	
+	/** The hashmap <id, patient> of all patients */
 	private static HashMap<String, Patient> patientsHashMap;
 	
+	/** The hashmap <id, doctor> of all doctors */
 	private static HashMap<String, Doctor> doctorsHashMap;
 	
+	/** The ordered list of patients */
 	private static PatientsOrderedList patientsOrderedList;
 	
+	/** The ordered list of doctors */
 	private static DoctorsOrderedList doctorsOrderedList;
 	
 	
@@ -73,10 +80,24 @@ public class Database
 	 * ID MANAGEMENT
 	 */
 	
+	
+	
+	/**
+	 * Calculate the id of the given patient (taxcode)
+	 * 
+	 * @param patient - the patient of which compute the id
+	 * @return the id of the patient, null if the patient is null
+	 */
 	private static final String getPatientId(Patient patient) {
 		return patient == null ? null : patient.getPersonalInfo().getTaxcode();
 	}
 	
+	/**
+	 * Calculate the id of the given doctor (surname + name)
+	 * 
+	 * @param doctor - the doctor of which compute the id
+	 * @return the id of the doctor, null if the doctor is null
+	 */
 	private static final String getDoctorId(Doctor doctor) {
 		return doctor == null ? null : doctor.getPersonalInfo().getSurname() + doctor.getPersonalInfo().getName();
 	}
@@ -87,54 +108,25 @@ public class Database
 	 * INIT
 	 */
 	
-	/**
-	 * Init the database checking the related dirs and files, reading the
-	 * patients and doctors stored. If the structure does not exist, create it
-	 * 
-	 * @return false if errors in the dirs structure, true otherwise
-	 * @throws IOException - if an I/O errors while reading patients/doctors
-	 */
-	public static synchronized boolean init() throws IOException {
-		// check the database dir
-		if (!DATABASE_DIR.exists()) {
-			Log.w(LOG_CLASS_NAME, LOG_DATABASE_INIT, "directory " + DATABASE_DIR.getAbsolutePath() + " does not exist");
-			if (!DATABASE_DIR.mkdirs()) {
-				Log.e(LOG_CLASS_NAME, LOG_DATABASE_INIT, "unable to create the directory " + DATABASE_DIR.getAbsolutePath());
-				return false;
-			} else
-				Log.i(LOG_CLASS_NAME, LOG_DATABASE_INIT, "directory " + DATABASE_DIR.getAbsolutePath() + " created");
-		} else if (!DATABASE_DIR.isDirectory()) {
-			Log.e(LOG_CLASS_NAME, LOG_DATABASE_INIT, "directory " + DATABASE_DIR.getAbsolutePath() + " is not a folder");
-			return false;
-		}
-		
-		// check the patients dir
-		if (!PATIENTS_DIR.exists()) {
-			Log.w(LOG_CLASS_NAME, LOG_DATABASE_INIT, "directory " + PATIENTS_DIR.getAbsolutePath() + " does not exist");
-			if (!PATIENTS_DIR.mkdirs()) {
-				Log.e(LOG_CLASS_NAME, LOG_DATABASE_INIT, "unable to create the directory " + PATIENTS_DIR.getAbsolutePath());
-				return false;
-			} else
-				Log.i(LOG_CLASS_NAME, LOG_DATABASE_INIT, "directory " + PATIENTS_DIR.getAbsolutePath() + " created");
-		} else if (!PATIENTS_DIR.isDirectory()) {
-			Log.e(LOG_CLASS_NAME, LOG_DATABASE_INIT, "directory " + PATIENTS_DIR.getAbsolutePath() + " is not a folder");
-			return false;
-		}
-		
-		// check the doctors dir
-		if (!DOCTORS_DIR.exists()) {
-			Log.w(LOG_CLASS_NAME, LOG_DATABASE_INIT, "directory " + DOCTORS_DIR.getAbsolutePath() + " does not exist");
-			if (!DOCTORS_DIR.mkdirs()) {
-				Log.e(LOG_CLASS_NAME, LOG_DATABASE_INIT, "unable to create the directory " + DOCTORS_DIR.getAbsolutePath());
-				return false;
-			} else
-				Log.i(LOG_CLASS_NAME, LOG_DATABASE_INIT, "directory " + DOCTORS_DIR.getAbsolutePath() + " created");
-		} else if (!DOCTORS_DIR.isDirectory()) {
-			Log.e(LOG_CLASS_NAME, LOG_DATABASE_INIT, "directory " + DOCTORS_DIR.getAbsolutePath() + " is not a folder");
-			return false;
-		}
+	
+	
+	public static synchronized void init() throws IOException, DatabaseException {
+		if (!DATABASE_DIR.exists() && !DATABASE_DIR.mkdirs())
+			throw new DatabaseException("impossibile inizializzare il database", "impossibile creare la directory principale");
+		if (!DATABASE_DIR.isDirectory())
+			throw new DatabaseException("impossibile inizializzare il database", "directory principale non regolare");
+		if (!PATIENTS_DIR.exists() && !PATIENTS_DIR.mkdirs())
+			throw new DatabaseException("impossibile inizializzare il database", "impossibile creare la directory per i pazienti");
+		if (!PATIENTS_DIR.isDirectory())
+			throw new DatabaseException("impossibile inizializzare il database", "directory per i pazienti non regolare");
+		if (!DOCTORS_DIR.exists() && !DOCTORS_DIR.mkdirs())
+			throw new DatabaseException("impossibile inizializzare il database", "impossibile creare la directory per i medici");
+		if (!DOCTORS_DIR.isDirectory())
+			throw new DatabaseException("impossibile inizializzare il database", "directory per i medici non regolare");
 		
 		// read doctors
+		doctorsHashMap = new HashMap<String, Doctor>();
+		doctorsOrderedList = new DoctorsOrderedList();
 		for (File file : DOCTORS_DIR.listFiles()) {
 			Doctor doctor = IO.readDoctor(file);
 			if (doctor != null) {
@@ -142,7 +134,10 @@ public class Database
 				doctorsOrderedList.add(doctor);
 			}
 		}
+		
 		// read patients
+		patientsHashMap = new HashMap<String, Patient>();
+		patientsOrderedList = new PatientsOrderedList();
 		for (File file : PATIENTS_DIR.listFiles()) {
 			Patient patient = IO.readPatient(file, doctorsHashMap);
 			if (patient != null) {
@@ -150,8 +145,6 @@ public class Database
 				patientsOrderedList.add(patient);
 			}
 		}
-		
-		return true;
 	}
 	
 	
@@ -160,42 +153,34 @@ public class Database
 	 * ADD PATIENT/DOCTOR
 	 */
 	
-	public static synchronized boolean addPatient(Patient patient) throws IOException {
+	
+	
+	public static synchronized void addPatient(Patient patient) throws IOException, DatabaseException {
 		String patientId = getPatientId(patient);
-		// patient == null
+		// patient null
 		if (patientId == null)
-			return false;
+			throw new DatabaseException("impossibile aggiungere il paziente", "paziente nullo");
 		// patient already exists
 		if (patientsHashMap.get(patientId) != null)
-			throw new IllegalArgumentException("Il paziente da creare (codice fiscale) è già presente all'interno del database");
+			throw new DatabaseException("impossibile aggiungere il paziente", "un paziente con lo stesso codice fiscale è già presente all'interno del database");
 		
-		// unable to create the patient
-		if (!IO.createPatient(patient, getDoctorId(patient.getReferringPhysician()), patientId, PATIENTS_DIR))
-			return false;
-		// patient created
+		IO.writePatient(patient, getDoctorId(patient.getReferringPhysician()), new File(PATIENTS_DIR, patientId));
 		patientsHashMap.put(patientId, patient);
 		patientsOrderedList.add(patient);
-		
-		return true;
 	}
 	
-	public static synchronized boolean addDoctor(Doctor doctor) throws IOException {
+	public static synchronized void addDoctor(Doctor doctor) throws IOException, DatabaseException {
 		String doctorId = getDoctorId(doctor);
-		// doctor == null
+		// doctor null
 		if (doctorId == null)
-			return false;
+			throw new DatabaseException("impossibile aggiungere il medico", "medico nullo");
 		// doctor already exists
 		if (doctorsHashMap.get(doctorId) != null)
-			throw new IllegalArgumentException("Il medico da creare (cognome + nome) è già presente all'interno del database");
+			throw new DatabaseException("impossibile aggiungere il medico", "un medico con lo stesso nome+cognome è già presente all'interno del database");
 		
-		// unable to create doctor
-		if (!IO.createDoctor(doctor, doctorId, DOCTORS_DIR))
-			return false;
-		// doctor created
+		IO.writeDoctor(doctor, new File(DOCTORS_DIR, doctorId));
 		doctorsHashMap.put(doctorId, doctor);
 		doctorsOrderedList.add(doctor);
-		
-		return true;
 	}
 	
 	
@@ -204,68 +189,66 @@ public class Database
 	 * EDIT PATIENT/DOCTOR
 	 */
 	
-	public static synchronized boolean editPatient(Patient oldPatient, Patient newPatient) throws IOException {
+	
+	
+	public static synchronized void editPatient(Patient oldPatient, Patient newPatient) throws IOException, DatabaseException {
+		// old patient null
 		String oldPatientId = getPatientId(oldPatient);
-		String newPatientId = getPatientId(newPatient);
-		// oldPatient == null || newPatient == null
-		if (oldPatientId == null || newPatientId == null)
-			return false;
+		if (oldPatientId == null)
+			throw new DatabaseException("impossibile modificare il paziente", "vecchio paziente nullo");
 		// old patient does not exist
 		if (patientsHashMap.get(oldPatientId) == null)
-			throw new IllegalArgumentException("Il paziente da modificare (codice fiscale) non è presente all'interno del database");
-		// new patient already exists
-		if (patientsHashMap.get(newPatientId) != null)
-			throw new IllegalArgumentException("I dati del nuovo paziente (codice fiscale) sono già presenti all'interno del database");
+			throw new DatabaseException("impossibile modificare il paziente", "un paziente con codice fiscale specificato non è presente all'interno del database");
+		// new patient null
+		String newPatientId = getPatientId(newPatient);
+		if (newPatientId == null)
+			throw new DatabaseException("impossibile modificare il paziente", "nuovo paziente nullo");
 		
 		// different ids
 		if (!oldPatientId.equals(newPatientId)) {
-			// unable to delete patient
-			if (!IO.deletePatient(oldPatientId, PATIENTS_DIR))
-				return false;
-			// patient deleted
+			// new patient already exists
+			if (patientsHashMap.get(newPatientId) != null)
+				throw new DatabaseException("impossibile modificare il paziente", "un paziente con lo stesso codice fiscale è già presente all'interno del database");
+			
+			IO.deletePatient(new File(PATIENTS_DIR, oldPatientId));
 			patientsHashMap.remove(oldPatientId);
-			patientsOrderedList.remove(oldPatient);
 		}
-		// unable to create patient
-		if (!IO.createPatient(newPatient, getDoctorId(newPatient.getReferringPhysician()), newPatientId, PATIENTS_DIR))
-			return false;
-		// patient created
+		
+		patientsOrderedList.remove(oldPatient);
+		
+		IO.writePatient(newPatient, getDoctorId(newPatient.getReferringPhysician()), new File(PATIENTS_DIR, newPatientId));
 		patientsHashMap.put(newPatientId, newPatient);
 		patientsOrderedList.add(newPatient);
-		
-		return true;
 	}
 	
-	public static synchronized boolean editDoctor(Doctor oldDoctor, Doctor newDoctor) throws IOException {
+	public static synchronized void editDoctor(Doctor oldDoctor, Doctor newDoctor) throws IOException, DatabaseException {
+		// old doctor null
 		String oldDoctorId = getDoctorId(oldDoctor);
-		String newDoctorId = getDoctorId(newDoctor);
-		// oldDoctor == null || newDoctor == null
-		if (oldDoctorId == null || newDoctorId == null)
-			return false;
+		if (oldDoctorId == null)
+			throw new DatabaseException("impossibile modificare il medico", "vecchio medico nullo");
 		// old doctor does not exist
 		if (doctorsHashMap.get(oldDoctorId) == null)
-			throw new IllegalArgumentException("Il medico da modificare (nome + cognome) non è presente all'interno del database");
-		// new doctor already exists
-		if (doctorsHashMap.get(newDoctorId) != null)
-			throw new IllegalArgumentException("I dati del nuovo medico (nome + cognome) sono già presenti all'interno del database");
+			throw new DatabaseException("impossibile modificare il medico", "un medico con nome+cognome specificato non è presente all'interno del database");
+		// new doctor null
+		String newDoctorId = getDoctorId(newDoctor);
+		if (newDoctorId == null)
+			throw new DatabaseException("impossibile modificare il medico", "nuovo medico nullo");
 		
 		// different ids
 		if (!oldDoctorId.equals(newDoctorId)) {
-			// unable to delete doctor
-			if (!IO.deleteDoctor(oldDoctorId, DOCTORS_DIR))
-				return false;
-			// doctor deleted
-			doctorsHashMap.remove(oldDoctorId);
+			// new doctor already exists
+			if (doctorsHashMap.get(newDoctorId) != null)
+				throw new DatabaseException("impossibile modificare il medico", "un medico con lo stesso nome+cognome è già presente all'interno del database");
+			
+			IO.deleteDoctor(new File(DOCTORS_DIR, oldDoctorId));
 			doctorsOrderedList.remove(oldDoctor);
 		}
-		// unable to create patient
-		if (!IO.createDoctor(newDoctor, newDoctorId, DOCTORS_DIR))
-			return false;
-		// doctor created
+		
+		doctorsOrderedList.remove(newDoctor);
+		
+		IO.writeDoctor(newDoctor, new File(DOCTORS_DIR, newDoctorId));
 		doctorsHashMap.put(newDoctorId, newDoctor);
 		doctorsOrderedList.add(newDoctor);
-		
-		return true;
 	}
 	
 	
@@ -274,42 +257,34 @@ public class Database
 	 * DELETE PATIENT/DOCTOR
 	 */
 	
-	public static synchronized boolean deletePatient(Patient patient) {
+	
+	
+	public static synchronized void deletePatient(Patient patient) throws IOException, DatabaseException {
 		String patientId = getPatientId(patient);
-		// patient == null
+		// patient null
 		if (patientId == null)
-			return false;
+			throw new DatabaseException("impossibile eliminare il paziente", "paziente nullo");
 		// patient does not exist
 		if (patientsHashMap.get(patientId) == null)
-			throw new IllegalArgumentException("Il paziente da eliminare (codice fiscale) non è presente all'interno del database");
+			throw new DatabaseException("impossibile eliminare il paziente", "un paziente con codice fiscale specificato non è presente all'interno del database");
 		
-		// unable to delete patient
-		if (!IO.deletePatient(patientId, PATIENTS_DIR))
-			return false;
-		// patient deleted
+		IO.deletePatient(new File(PATIENTS_DIR, patientId));
 		patientsHashMap.remove(patientId);
 		patientsOrderedList.remove(patient);
-		
-		return true;
 	}
 	
-	public static synchronized boolean deleteDoctor(Doctor doctor) {
+	public static synchronized void deleteDoctor(Doctor doctor) throws IOException, DatabaseException {
 		String doctorId = getDoctorId(doctor);
-		// doctor == null
+		// doctor null
 		if (doctorId == null)
-			return false;
+			throw new DatabaseException("impossibile eliminare il medico", "medico nullo");
 		// doctor does not exist
 		if (doctorsHashMap.get(doctorId) == null)
-			throw new IllegalArgumentException("Il medico da eliminare (nome + cognome) non è presente all'interno del database");
+			throw new DatabaseException("impossibile eliminare il medico", "un medico con nome+cognome specificato non è presente all'interno del database");
 		
-		// unable to delete doctor
-		if (!IO.deletePatient(doctorId, DOCTORS_DIR))
-			return false;
-		// doctor deleted
+		IO.deletePatient(new File(DOCTORS_DIR, doctorId));
 		doctorsHashMap.remove(doctorId);
 		doctorsOrderedList.remove(doctor);
-		
-		return true;
 	}
 	
 	
@@ -318,12 +293,14 @@ public class Database
 	 * GET ALL PATIENTS/DOCTORS
 	 */
 	
-	public static synchronized ArrayList<Patient> getAllPatients() {
-		return new ArrayList<Patient>(patientsOrderedList);
+	
+	
+	public static synchronized Patient[] getAllPatients() {
+		return new ArrayList<Patient>(patientsOrderedList).toArray(new Patient[patientsOrderedList.size()]);
 	}
 	
-	public static synchronized ArrayList<Doctor> getAllDoctors() {
-		return new ArrayList<Doctor>(doctorsOrderedList);
+	public static synchronized Doctor[] getAllDoctors() {
+		return new ArrayList<Doctor>(doctorsOrderedList).toArray(new Doctor[doctorsOrderedList.size()]);
 	}
 	
 	
@@ -332,5 +309,64 @@ public class Database
 	 * GET FILTERED PATIENTS/DOCTORS
 	 */
 	
-	// TODO
+	
+	
+	public static synchronized Patient[] getFilteredPatients(String text, boolean lastVisitCurrentYear) {
+		ArrayList<Patient> output = new ArrayList<Patient>(patientsOrderedList);
+		
+		// filter by last visit date and text
+		if (lastVisitCurrentYear && text != null && !text.isEmpty()) {
+			GregorianCalendar now = new GregorianCalendar();
+			GregorianCalendar lastVisitDate = new GregorianCalendar();
+			text = text.toUpperCase();
+			for (Patient patient : patientsOrderedList) {
+				try {
+					lastVisitDate.setTime(patient.getMedicalRecordInfo().getLastVisitDate());
+					if (now.get(GregorianCalendar.YEAR) != lastVisitDate.get(GregorianCalendar.YEAR))
+						output.remove(patient);
+					else if (!patient.toString().toUpperCase().contains(text))
+						output.remove(patient);
+				// if last visit date is null
+				} catch (NullPointerException ex) {
+					output.remove(patient);
+				}
+			}
+		// filter by last visit date
+		} else if (lastVisitCurrentYear) {
+			GregorianCalendar now = new GregorianCalendar();
+			GregorianCalendar lastVisitDate = new GregorianCalendar();
+			for (Patient patient : patientsOrderedList) {
+				try {
+					lastVisitDate.setTime(patient.getMedicalRecordInfo().getLastVisitDate());
+					if (now.get(GregorianCalendar.YEAR) != lastVisitDate.get(GregorianCalendar.YEAR))
+						output.remove(patient);
+				// if last visit date is null
+				} catch (NullPointerException ex) {
+					output.remove(patient);
+				}
+			}
+		// filter by text
+		} else if (text != null && !text.isEmpty()) {
+			text = text.toUpperCase();
+			for (Patient patient : patientsOrderedList)
+				if (!patient.toString().toUpperCase().contains(text))
+					output.remove(patient);
+		}
+		
+		return output.toArray(new Patient[output.size()]);
+	}
+	
+	public static synchronized Doctor[] getFilteredDoctors(String text) {
+		ArrayList<Doctor> output = new ArrayList<Doctor>(doctorsOrderedList);
+		
+		// filter by text
+		if (text != null && !text.isEmpty()) {
+			text = text.toUpperCase();
+			for (Doctor doctor : doctorsOrderedList)
+				if (!doctor.toString().toUpperCase().contains(text))
+					output.remove(doctor);
+		}
+		
+		return output.toArray(new Doctor[output.size()]);
+	}
 }

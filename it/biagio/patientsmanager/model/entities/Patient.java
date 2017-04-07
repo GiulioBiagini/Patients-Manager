@@ -64,9 +64,14 @@ public class Patient extends AEntity
 	 * @param contactsInfo - the info related to the contacts (can't be null)
 	 * @param referringPhysician - the referring physician, null if no doctor has been selected
 	 * @param problemsInfo - the info related to the problems (can't be null)
+	 * @throws IllegalArgumentException - if info related to account, personal data,
+	 * medical record, address, contacts, referring physician and problems are null
 	 */
-	public Patient(AccountInfo accountInfo, PatientPersonalInfo personalInfo, MedicalRecordInfo medicalRecordInfo, AddressInfo addressInfo, ContactsInfo contactsInfo, Doctor referringPhysician, ProblemsInfo problemsInfo) {
+	public Patient(AccountInfo accountInfo, PatientPersonalInfo personalInfo, MedicalRecordInfo medicalRecordInfo, AddressInfo addressInfo, ContactsInfo contactsInfo, Doctor referringPhysician, ProblemsInfo problemsInfo) throws IllegalArgumentException {
 		super(accountInfo, personalInfo, addressInfo, contactsInfo);
+		setMedicalRecordInfo(medicalRecordInfo);
+		setReferringPhysician(referringPhysician);
+		setProblemsInfo(problemsInfo);
 	}
 	
 	
@@ -75,11 +80,12 @@ public class Patient extends AEntity
 	 * Set the info related to the medical record
 	 * 
 	 * @param medicalRecordInfo - the info related to the medical record (can't be null)
+	 * @throws IllegalArgumentException - if info related to medical record is null
 	 */
-	public void setMedicalRecordInfo(MedicalRecordInfo medicalRecordInfo) {
+	public void setMedicalRecordInfo(MedicalRecordInfo medicalRecordInfo) throws IllegalArgumentException {
 		if (medicalRecordInfo == null)
 			throw new IllegalArgumentException(
-				"Specificare le informazioni relative alla cartella clinica"
+				"informazioni relative alla cartella clinica non presenti"
 			);
 		this.medicalRecordInfo = medicalRecordInfo;
 	}
@@ -88,8 +94,9 @@ public class Patient extends AEntity
 	 * Set the referring physician
 	 * 
 	 * @param referringPhysician - the referring physician, null if no doctor has been selected
+	 * @throws IllegalArgumentException - if info related to referring physician is null
 	 */
-	public void setReferringPhysician(Doctor referringPhysician) {
+	public void setReferringPhysician(Doctor referringPhysician) throws IllegalArgumentException {
 		this.referringPhysician = referringPhysician;
 	}
 	
@@ -97,11 +104,12 @@ public class Patient extends AEntity
 	 * Set the info related to the problems
 	 * 
 	 * @param problemsInfo - the info related to the problems (can't be null)
+	 * @throws IllegalArgumentException - if info related to problems is null
 	 */
-	public void setProblemsInfo(ProblemsInfo problemsInfo) {
+	public void setProblemsInfo(ProblemsInfo problemsInfo) throws IllegalArgumentException {
 		if (problemsInfo == null)
 			throw new IllegalArgumentException(
-				"Specificare le informazioni relative alle problematiche"
+				"informazioni relative alle problematiche non presenti"
 			);
 		this.problemsInfo = problemsInfo;
 	}
@@ -150,7 +158,7 @@ public class Patient extends AEntity
 	@Override
 	public String toString() {
 		PatientPersonalInfo personalInfo = getPersonalInfo();
-		return medicalRecordInfo.getNumber() + " - " + medicalRecordInfo.getType() + " - " + personalInfo.getSurname() + personalInfo.getName() +
+		return medicalRecordInfo.getNumber() + " - " + medicalRecordInfo.getType() + " - " + personalInfo.getSurname() + " " + personalInfo.getName() +
 			(medicalRecordInfo.getLastVisitDate() == null ? "" : " (" + DateConverter.dateToString(medicalRecordInfo.getLastVisitDate()) + ")");
 	}
 }
