@@ -30,7 +30,7 @@ import java.awt.Component;
 
 import javax.swing.JOptionPane;
 
-import it.biagio.patientsmanager.Const;
+import it.biagio.patientsmanager.view.Const;
 
 
 

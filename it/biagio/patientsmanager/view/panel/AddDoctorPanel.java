@@ -29,9 +29,9 @@ package it.biagio.patientsmanager.view.panel;
 import java.text.ParseException;
 import java.util.Date;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.Doctor;
 import it.biagio.patientsmanager.model.entities.info.account.AccountInfo;
+import it.biagio.patientsmanager.view.Const;
 import it.biagio.patientsmanager.view.panel.info.address.EditableAddressInfo;
 import it.biagio.patientsmanager.view.panel.info.contacts.EditableContactsInfo;
 import it.biagio.patientsmanager.view.panel.info.personal.EditableDoctorPersonalInfo;

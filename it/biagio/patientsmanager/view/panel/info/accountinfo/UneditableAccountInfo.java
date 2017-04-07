@@ -31,9 +31,9 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.info.account.AccountInfo;
 import it.biagio.patientsmanager.utils.DateConverter;
+import it.biagio.patientsmanager.view.Const;
 import it.biagio.patientsmanager.view.panel.info.AInfo;
 
 

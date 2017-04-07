@@ -26,9 +26,9 @@ package it.biagio.patientsmanager.view.panel;
 
 
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.Doctor;
 import it.biagio.patientsmanager.model.entities.info.personal.DoctorPersonalInfo;
+import it.biagio.patientsmanager.view.Const;
 import it.biagio.patientsmanager.view.panel.info.accountinfo.UneditableAccountInfo;
 import it.biagio.patientsmanager.view.panel.info.address.UneditableAddressInfo;
 import it.biagio.patientsmanager.view.panel.info.contacts.UneditableContactsInfo;

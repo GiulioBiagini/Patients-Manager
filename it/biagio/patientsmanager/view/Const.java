@@ -22,7 +22,7 @@
 
 
 
-package it.biagio.patientsmanager;
+package it.biagio.patientsmanager.view;
 
 
 
@@ -80,6 +80,8 @@ public class Const
 	public static final Font PLAIN_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
 	
 	public static final Font BOLD_FONT = PLAIN_FONT.deriveFont(Font.BOLD);
+	
+	public static final Font TITLE_FONT = new Font(Font.SERIF, Font.BOLD, 12);
 	
 	
 	

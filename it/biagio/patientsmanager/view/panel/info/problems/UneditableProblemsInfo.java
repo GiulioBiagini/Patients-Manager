@@ -35,8 +35,8 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.info.problems.ProblemsInfo;
+import it.biagio.patientsmanager.view.Const;
 import it.biagio.patientsmanager.view.panel.info.AInfo;
 
 

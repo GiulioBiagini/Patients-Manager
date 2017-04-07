@@ -30,7 +30,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Icon;
 
-import it.biagio.patientsmanager.Const;
+import it.biagio.patientsmanager.view.Const;
 
 
 

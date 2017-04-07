@@ -30,13 +30,15 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.border.TitledBorder;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.utils.TransparentPanel;
+import it.biagio.patientsmanager.view.Const;
 
 
 
@@ -71,14 +73,25 @@ public class PatientsTab extends ATab
 		});
 		lastVisitCurrentYearCheckBox.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		
-		filtersPanel = new TransparentPanel(new GridLayout(1, 1));
-		filtersPanel.setBorder(BorderFactory.createTitledBorder(
+		TitledBorder titledBorder = BorderFactory.createTitledBorder(
 			BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true),
 			Const.FILTERS_LABEL,
 			TitledBorder.DEFAULT_JUSTIFICATION,
 			TitledBorder.DEFAULT_POSITION,
 			Const.BOLD_FONT
-		));
+		);
+		/* try to add the filter icon to the title of the panel using reflection */
+		try {
+			Field labelField = TitledBorder.class.getDeclaredField("label");
+			labelField.setAccessible(true);
+			JLabel titleLabel = (JLabel) labelField.get(titledBorder);
+			labelField.setAccessible(false);
+			titleLabel.setIcon(Const.FILTERS_ICON);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+			
+		}
+		filtersPanel = new TransparentPanel(new GridLayout(1, 1));
+		filtersPanel.setBorder(titledBorder);
 		filtersPanel.add(lastVisitCurrentYearCheckBox);
 		
 		southPanel = new TransparentPanel(new BorderLayout(), 0, 10, 10, 10);

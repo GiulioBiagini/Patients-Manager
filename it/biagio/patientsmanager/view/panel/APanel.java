@@ -30,7 +30,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -40,7 +39,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import it.biagio.patientsmanager.Const;
+import it.biagio.patientsmanager.view.Const;
 
 
 
@@ -63,7 +62,7 @@ public abstract class APanel extends JPanel
 		super(new BorderLayout());
 		
 		titleLabel = new JLabel(titleIcon, JLabel.CENTER);
-		titleLabel.setFont(titleLabel.getFont().deriveFont(Font.BOLD));
+		titleLabel.setFont(Const.TITLE_FONT);
 		titleLabel.setForeground(titleForegroundColor);
 		titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 		

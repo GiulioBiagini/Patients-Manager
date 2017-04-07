@@ -33,8 +33,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.info.address.AddressInfo;
+import it.biagio.patientsmanager.view.Const;
 import it.biagio.patientsmanager.view.panel.info.AInfo;
 
 

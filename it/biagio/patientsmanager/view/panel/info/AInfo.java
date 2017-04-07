@@ -33,8 +33,8 @@ import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.border.TitledBorder;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.utils.TransparentPanel;
+import it.biagio.patientsmanager.view.Const;
 
 
 

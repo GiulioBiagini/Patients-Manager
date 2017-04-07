@@ -33,7 +33,6 @@ import java.text.ParseException;
 
 import javax.swing.JFrame;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.Doctor;
 import it.biagio.patientsmanager.model.entities.Patient;
 import it.biagio.patientsmanager.utils.DateConverter;
@@ -62,6 +61,10 @@ import it.biagio.patientsmanager.view.panel.ShowMalePatientPanel;
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements ListsPanelObserver, OperationsPanelObserver
 {
+	private static final String LINE_SEPARATOR = System.lineSeparator();
+	
+	
+	
 	private TransparentPanel northPanel;
 	
 	private UpperBanner upperBanner;
@@ -325,9 +328,9 @@ public class MainFrame extends JFrame implements ListsPanelObserver, OperationsP
 					observer.onDeleteDoctor(listsPanel.getSelectedDoctor());
 			}
 		} catch (ParseException ex) {
-			MessageFactory.errorDialog(this, "Impossibile completare l'operazione:" + System.lineSeparator() + "formato date non corretto (" + DateConverter.DATE_FORMAT + ")");
+			MessageFactory.errorDialog(this, "Impossibile completare l'operazione:" + LINE_SEPARATOR + "formato date non corretto (" + DateConverter.DATE_FORMAT + ")");
 		} catch (IllegalArgumentException ex) {
-			MessageFactory.errorDialog(this, "Impossibile completare l'operazione:" + System.lineSeparator() + ex.getMessage());
+			MessageFactory.errorDialog(this, "Impossibile completare l'operazione:" + LINE_SEPARATOR + ex.getMessage());
 		}
 	}
 	

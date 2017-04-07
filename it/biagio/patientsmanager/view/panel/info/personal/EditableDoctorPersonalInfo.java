@@ -34,10 +34,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.info.personal.APersonalInfo;
 import it.biagio.patientsmanager.model.entities.info.personal.DoctorPersonalInfo;
 import it.biagio.patientsmanager.utils.DateConverter;
+import it.biagio.patientsmanager.view.Const;
 
 
 

@@ -37,10 +37,10 @@ import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.info.personal.APersonalInfo;
 import it.biagio.patientsmanager.utils.DateConverter;
 import it.biagio.patientsmanager.utils.TransparentPanel;
+import it.biagio.patientsmanager.view.Const;
 import it.biagio.patientsmanager.view.panel.info.AInfo;
 
 

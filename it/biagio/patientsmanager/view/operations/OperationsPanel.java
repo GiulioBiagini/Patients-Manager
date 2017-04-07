@@ -34,8 +34,8 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.utils.TransparentPanel;
+import it.biagio.patientsmanager.view.Const;
 import it.biagio.patientsmanager.view.operations.button.DangerButton;
 import it.biagio.patientsmanager.view.operations.button.PrimaryButton;
 import it.biagio.patientsmanager.view.operations.button.SuccessButton;

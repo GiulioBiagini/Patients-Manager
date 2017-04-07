@@ -26,8 +26,8 @@ package it.biagio.patientsmanager.view.panel.info.problems;
 
 
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.info.problems.ProblemsInfo;
+import it.biagio.patientsmanager.view.Const;
 
 
 

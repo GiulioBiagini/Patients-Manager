@@ -31,9 +31,9 @@ import java.awt.Insets;
 
 import javax.swing.JLabel;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.info.personal.APersonalInfo;
 import it.biagio.patientsmanager.model.entities.info.personal.PatientPersonalInfo;
+import it.biagio.patientsmanager.view.Const;
 
 
 

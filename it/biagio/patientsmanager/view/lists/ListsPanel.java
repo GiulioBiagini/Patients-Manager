@@ -30,10 +30,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.AEntity;
 import it.biagio.patientsmanager.model.entities.Doctor;
 import it.biagio.patientsmanager.model.entities.Patient;
+import it.biagio.patientsmanager.view.Const;
 import it.biagio.patientsmanager.view.lists.tab.DoctorsTab;
 import it.biagio.patientsmanager.view.lists.tab.DoctorsTabObserver;
 import it.biagio.patientsmanager.view.lists.tab.PatientsTab;

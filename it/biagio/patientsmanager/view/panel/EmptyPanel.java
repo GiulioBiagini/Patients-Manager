@@ -26,7 +26,7 @@ package it.biagio.patientsmanager.view.panel;
 
 
 
-import it.biagio.patientsmanager.Const;
+import it.biagio.patientsmanager.view.Const;
 
 
 

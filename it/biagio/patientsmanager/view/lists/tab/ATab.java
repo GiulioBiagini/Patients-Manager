@@ -40,9 +40,9 @@ import javax.swing.event.CaretListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.AEntity;
 import it.biagio.patientsmanager.utils.TransparentPanel;
+import it.biagio.patientsmanager.view.Const;
 
 
 

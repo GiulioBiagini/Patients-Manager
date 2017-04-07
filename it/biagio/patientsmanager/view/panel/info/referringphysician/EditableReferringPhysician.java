@@ -32,8 +32,8 @@ import java.awt.Insets;
 import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 
-import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.Doctor;
+import it.biagio.patientsmanager.view.Const;
 import it.biagio.patientsmanager.view.panel.info.AInfo;
 
 
