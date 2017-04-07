@@ -59,13 +59,19 @@ public class UneditableMedicalRecordInfo extends AInfo
 		super(Const.MEDICAL_RECORD_INFO_TITLE);
 		
 		typeLabel = new JLabel(Const.MEDICAL_RECORD_INFO_TYPE);
+		typeLabel.setFont(Const.PLAIN_FONT);
 		typeValue = new JLabel();
+		typeValue.setFont(Const.BOLD_FONT);
 		
 		numberLabel = new JLabel(Const.MEDICAL_RECORD_INFO_NUMBER);
+		numberLabel.setFont(Const.PLAIN_FONT);
 		numberValue = new JLabel();
+		numberValue.setFont(Const.BOLD_FONT);
 		
 		lastVisitDateLabel = new JLabel(Const.MEDICAL_RECORD_INFO_LAST_VISIT_DATE);
+		lastVisitDateLabel.setFont(Const.PLAIN_FONT);
 		lastVisitDateValue = new JLabel();
+		lastVisitDateValue.setFont(Const.BOLD_FONT);
 		
 		add(typeLabel, new GridBagConstraints(0, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 5), 0, 0));
 		add(typeValue, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
@@ -74,7 +80,7 @@ public class UneditableMedicalRecordInfo extends AInfo
 		add(numberValue, new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 0), 0, 0));
 		
 		add(lastVisitDateLabel, new GridBagConstraints(0, 1, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 5), 0, 0));
-		add(lastVisitDateValue, new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 0), 0, 0));
+		add(lastVisitDateValue, new GridBagConstraints(1, 1, 3, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 0), 0, 0));
 	}
 	
 	

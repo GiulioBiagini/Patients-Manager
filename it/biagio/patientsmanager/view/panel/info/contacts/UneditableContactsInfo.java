@@ -54,10 +54,14 @@ public class UneditableContactsInfo extends AInfo
 		super(Const.CONTACTS_INFO_TITLE);
 		
 		telephoneNumberLabel = new JLabel(Const.CONTACTS_INFO_TELEPHONE_NUMBER);
+		telephoneNumberLabel.setFont(Const.PLAIN_FONT);
 		telephoneNumberValue = new JLabel();
+		telephoneNumberValue.setFont(Const.BOLD_FONT);
 		
 		mobileNumberLabel = new JLabel(Const.CONTACTS_INFO_MOBILE_NUMBER);
+		mobileNumberLabel.setFont(Const.PLAIN_FONT);
 		mobileNumberValue = new JLabel();
+		mobileNumberValue.setFont(Const.BOLD_FONT);
 		
 		add(telephoneNumberLabel, new GridBagConstraints(0, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 5), 0, 0));
 		add(telephoneNumberValue, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 5), 0, 0));

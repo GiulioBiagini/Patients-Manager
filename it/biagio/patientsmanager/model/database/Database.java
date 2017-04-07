@@ -99,7 +99,7 @@ public class Database
 	 * @return the id of the doctor, null if the doctor is null
 	 */
 	private static final String getDoctorId(Doctor doctor) {
-		return doctor == null ? null : doctor.getPersonalInfo().getSurname() + doctor.getPersonalInfo().getName();
+		return doctor == null ? null : doctor.getPersonalInfo().getSurname() + "_" + doctor.getPersonalInfo().getName();
 	}
 	
 	
@@ -241,10 +241,10 @@ public class Database
 				throw new DatabaseException("impossibile modificare il medico", "un medico con lo stesso nome+cognome è già presente all'interno del database");
 			
 			IO.deleteDoctor(new File(DOCTORS_DIR, oldDoctorId));
-			doctorsOrderedList.remove(oldDoctor);
+			doctorsHashMap.remove(oldDoctorId);
 		}
 		
-		doctorsOrderedList.remove(newDoctor);
+		doctorsOrderedList.remove(oldDoctor);
 		
 		IO.writeDoctor(newDoctor, new File(DOCTORS_DIR, newDoctorId));
 		doctorsHashMap.put(newDoctorId, newDoctor);

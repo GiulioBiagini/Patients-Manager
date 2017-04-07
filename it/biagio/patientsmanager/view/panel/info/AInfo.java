@@ -31,6 +31,7 @@ import java.awt.Component;
 import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.border.TitledBorder;
 
 import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.utils.TransparentPanel;
@@ -48,7 +49,10 @@ public abstract class AInfo extends TransparentPanel
 		super(new BorderLayout());
 		setBorder(BorderFactory.createTitledBorder(
 			BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true),
-			title
+			title,
+			TitledBorder.DEFAULT_JUSTIFICATION,
+			TitledBorder.DEFAULT_POSITION,
+			Const.BOLD_FONT
 		));
 		
 		middlePanel = new TransparentPanel(new GridBagLayout());

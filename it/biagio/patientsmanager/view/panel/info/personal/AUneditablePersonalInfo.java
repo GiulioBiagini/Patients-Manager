@@ -67,19 +67,29 @@ public abstract class AUneditablePersonalInfo extends AInfo
 		super(Const.PERSONAL_INFO_TITLE);
 		
 		surnameLabel = new JLabel(Const.PERSONAL_INFO_SURNAME);
+		surnameLabel.setFont(Const.PLAIN_FONT);
 		surnameValue = new JLabel();
+		surnameValue.setFont(Const.BOLD_FONT);
 		
 		nameLabel = new JLabel(Const.PERSONAL_INFO_NAME);
+		nameLabel.setFont(Const.PLAIN_FONT);
 		nameValue = new JLabel();
+		nameValue.setFont(Const.BOLD_FONT);
 		
 		birthdateLabel = new JLabel(Const.PERSONAL_INFO_BIRTHDATE);
+		birthdateLabel.setFont(Const.PLAIN_FONT);
 		birthdateValue = new JLabel();
+		birthdateValue.setFont(Const.BOLD_FONT);
 		
 		genderLabel = new JLabel(Const.PERSONAL_INFO_GENDER);
+		genderLabel.setFont(Const.PLAIN_FONT);
 		genderValue = new JLabel();
+		genderValue.setFont(Const.BOLD_FONT);
 		
 		taxcodeLabel = new JLabel(Const.PERSONAL_INFO_TAXCODE);
+		taxcodeLabel.setFont(Const.PLAIN_FONT);
 		taxcodeValue = new JLabel();
+		taxcodeValue.setFont(Const.BOLD_FONT);
 		
 		add(surnameLabel, new GridBagConstraints(0, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 5), 0, 0));
 		add(surnameValue, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));

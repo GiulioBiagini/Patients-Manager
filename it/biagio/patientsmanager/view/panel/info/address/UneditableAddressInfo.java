@@ -66,34 +66,44 @@ public class UneditableAddressInfo extends AInfo
 		super(Const.ADDRESS_INFO_TITLE);
 		
 		addressLabel = new JLabel(Const.ADDRESS_INFO_ADDRESS);
+		addressLabel.setFont(Const.PLAIN_FONT);
 		addressValue = new JLabel();
+		addressValue.setFont(Const.BOLD_FONT);
 		
 		civicNumberLabel = new JLabel(Const.ADDRESS_INFO_CIVIC_NUMBER);
+		civicNumberLabel.setFont(Const.PLAIN_FONT);
 		civicNumberValue = new JLabel();
+		civicNumberValue.setFont(Const.BOLD_FONT);
 		
 		cityLabel = new JLabel(Const.ADDRESS_INFO_CITY);
+		cityLabel.setFont(Const.PLAIN_FONT);
 		cityValue = new JLabel();
+		cityValue.setFont(Const.BOLD_FONT);
 		
 		zipCodeLabel = new JLabel(Const.ADDRESS_INFO_ZIP_CODE);
+		zipCodeLabel.setFont(Const.PLAIN_FONT);
 		zipCodeValue = new JLabel();
+		zipCodeValue.setFont(Const.BOLD_FONT);
 		
 		provinceLabel = new JLabel(Const.ADDRESS_INFO_PROVINCE);
+		provinceLabel.setFont(Const.PLAIN_FONT);
 		provinceValue = new JLabel();
+		provinceValue.setFont(Const.BOLD_FONT);
 		
 		add(addressLabel, new GridBagConstraints(0, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 5), 0, 0));
-		add(addressValue, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
+		add(addressValue, new GridBagConstraints(1, 0, 3, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
 		
-		add(civicNumberLabel, new GridBagConstraints(2, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
-		add(civicNumberValue, new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 0), 0, 0));
+		add(civicNumberLabel, new GridBagConstraints(4, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
+		add(civicNumberValue, new GridBagConstraints(5, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 0), 0, 0));
 		
-		add(cityLabel, new GridBagConstraints(0, 1, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 5, 5), 0, 0));
-		add(cityValue, new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
+		add(cityLabel, new GridBagConstraints(0, 1, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 5), 0, 0));
+		add(cityValue, new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 5), 0, 0));
 		
-		add(zipCodeLabel, new GridBagConstraints(2, 1, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 5), 0, 0));
-		add(zipCodeValue, new GridBagConstraints(3, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 5, 0), 0, 0));
+		add(zipCodeLabel, new GridBagConstraints(2, 1, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 5), 0, 0));
+		add(zipCodeValue, new GridBagConstraints(3, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 5), 0, 0));
 		
-		add(provinceLabel, new GridBagConstraints(0, 2, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 5), 0, 0));
-		add(provinceValue, new GridBagConstraints(1, 2, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 0), 0, 0));
+		add(provinceLabel, new GridBagConstraints(4, 1, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 5), 0, 0));
+		add(provinceValue, new GridBagConstraints(5, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 0), 0, 0));
 	}
 	
 	

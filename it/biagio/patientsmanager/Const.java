@@ -28,6 +28,7 @@ package it.biagio.patientsmanager;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 
 import javax.swing.Icon;
@@ -69,6 +70,16 @@ public class Const
 	public static final int LEFT_PANEL_WIDTH = SCREEN_SIZE.width / 4;
 	
 	public static final int BUTTONS_PANEL_HEIGHT = 55;
+	
+	
+	
+	/*
+	 * FONTS
+	 */
+	
+	public static final Font PLAIN_FONT = new Font(Font.SANS_SERIF, Font.PLAIN, 12);
+	
+	public static final Font BOLD_FONT = PLAIN_FONT.deriveFont(Font.BOLD);
 	
 	
 	
@@ -123,6 +134,10 @@ public class Const
 	public static final Color DANGER_BUTTON_BACKGROUND_COLOR = new Color(201, 48, 44);// #c9302c
 	
 	public static final Color DANGER_BUTTON_BORDER_COLOR = new Color(172, 41, 37);// #ac2925
+	
+	
+	
+	public static final Color INFO_PANELS_REQUIRED_FIELD_FOREGROUND_COLOR = Color.RED;
 	
 	
 	

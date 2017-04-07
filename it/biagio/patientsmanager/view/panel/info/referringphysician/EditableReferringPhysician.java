@@ -29,6 +29,7 @@ package it.biagio.patientsmanager.view.panel.info.referringphysician;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 
 import it.biagio.patientsmanager.Const;
@@ -48,6 +49,8 @@ public class EditableReferringPhysician extends AInfo
 		super(Const.REFERRING_PHYSICIAN_INFO_TITLE);
 		
 		referringPhysicianValue = new JComboBox<Doctor>();
+		referringPhysicianValue.setFont(Const.PLAIN_FONT);
+		referringPhysicianValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		referringPhysicianValue.addItem(null);
 		referringPhysicianValue.setSelectedIndex(0);
 		referringPhysicianValue.setBackground(Const.PANEL_BACKGROUND_COLOR);

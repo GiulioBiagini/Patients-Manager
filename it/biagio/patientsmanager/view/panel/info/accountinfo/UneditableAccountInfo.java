@@ -55,10 +55,14 @@ public class UneditableAccountInfo extends AInfo
 		super(Const.ACCOUNT_INFO_TITLE);
 		
 		creationDateLabel = new JLabel(Const.ACCOUNT_INFO_CREATION_DATE);
+		creationDateLabel.setFont(Const.PLAIN_FONT);
 		creationDateValue = new JLabel();
+		creationDateValue.setFont(Const.BOLD_FONT);
 		
 		closingDateLabel = new JLabel(Const.ACCOUNT_INFO_CLOSING_DATE);
+		closingDateLabel.setFont(Const.PLAIN_FONT);
 		closingDateValue = new JLabel();
+		closingDateValue.setFont(Const.BOLD_FONT);
 		
 		add(creationDateLabel, new GridBagConstraints(0, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 5), 0, 0));
 		add(creationDateValue, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 5), 0, 0));

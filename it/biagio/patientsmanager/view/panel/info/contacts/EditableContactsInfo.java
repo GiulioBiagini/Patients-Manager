@@ -29,6 +29,7 @@ package it.biagio.patientsmanager.view.panel.info.contacts;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -55,10 +56,16 @@ public class EditableContactsInfo extends AInfo
 		super(Const.CONTACTS_INFO_TITLE);
 		
 		telephoneNumberLabel = new JLabel(Const.CONTACTS_INFO_TELEPHONE_NUMBER);
+		telephoneNumberLabel.setFont(Const.BOLD_FONT);
 		telephoneNumberValue = new JTextField();
+		telephoneNumberValue.setFont(Const.PLAIN_FONT);
+		telephoneNumberValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		
 		mobileNumberLabel = new JLabel(Const.CONTACTS_INFO_MOBILE_NUMBER);
+		mobileNumberLabel.setFont(Const.BOLD_FONT);
 		mobileNumberValue = new JTextField();
+		mobileNumberValue.setFont(Const.PLAIN_FONT);
+		mobileNumberValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		
 		add(telephoneNumberLabel, new GridBagConstraints(0, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 5), 0, 0));
 		add(telephoneNumberValue, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 5), 0, 0));

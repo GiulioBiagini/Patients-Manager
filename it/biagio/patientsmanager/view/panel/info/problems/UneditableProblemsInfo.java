@@ -44,7 +44,7 @@ import it.biagio.patientsmanager.view.panel.info.AInfo;
 @SuppressWarnings("serial")
 public class UneditableProblemsInfo extends AInfo
 {
-	private JLabel heartProblemsLabel;
+	protected JLabel heartProblemsLabel;
 	
 	private JScrollPane heartProblemsScrollPane;
 	
@@ -56,7 +56,9 @@ public class UneditableProblemsInfo extends AInfo
 		super(Const.PROBLEMS_INFO_TITLE);
 		
 		heartProblemsLabel = new JLabel(Const.PROBLEMS_INFO_HEART_PROBLEMS);
+		heartProblemsLabel.setFont(Const.PLAIN_FONT);
 		heartProblemsValue = new JTextArea();
+		heartProblemsValue.setFont(Const.BOLD_FONT);
 		heartProblemsValue.setEditable(false);
 		heartProblemsValue.setBackground(Const.PANEL_BACKGROUND_COLOR);
 		heartProblemsScrollPane = new JScrollPane(heartProblemsValue);

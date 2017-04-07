@@ -30,6 +30,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.text.ParseException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -53,7 +54,10 @@ public class EditableDoctorPersonalInfo extends AEditablePersonalInfo
 		super();
 		
 		specializationLabel = new JLabel(Const.PERSONAL_INFO_PROFESSION);
+		specializationLabel.setFont(Const.BOLD_FONT);
 		specializationValue = new JTextField();
+		specializationValue.setFont(Const.PLAIN_FONT);
+		specializationValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		
 		add(specializationLabel, new GridBagConstraints(2, 2, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 5), 0, 0));
 		add(specializationValue, new GridBagConstraints(3, 2, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 0), 0, 0));

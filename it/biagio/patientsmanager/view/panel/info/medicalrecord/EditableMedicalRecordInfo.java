@@ -30,6 +30,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.text.ParseException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -61,13 +62,24 @@ public class EditableMedicalRecordInfo extends AInfo
 		super(Const.MEDICAL_RECORD_INFO_TITLE);
 		
 		typeLabel = new JLabel(Const.MEDICAL_RECORD_INFO_TYPE);
+		typeLabel.setFont(Const.BOLD_FONT);
+		typeLabel.setForeground(Const.INFO_PANELS_REQUIRED_FIELD_FOREGROUND_COLOR);
 		typeValue = new JTextField();
+		typeValue.setFont(Const.PLAIN_FONT);
+		typeValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		
 		numberLabel = new JLabel(Const.MEDICAL_RECORD_INFO_NUMBER);
+		numberLabel.setFont(Const.BOLD_FONT);
+		numberLabel.setForeground(Const.INFO_PANELS_REQUIRED_FIELD_FOREGROUND_COLOR);
 		numberValue = new JTextField();
+		numberValue.setFont(Const.PLAIN_FONT);
+		numberValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		
 		lastVisitDateLabel = new JLabel(Const.MEDICAL_RECORD_INFO_LAST_VISIT_DATE);
+		lastVisitDateLabel.setFont(Const.BOLD_FONT);
 		lastVisitDateValue = new JTextField();
+		lastVisitDateValue.setFont(Const.PLAIN_FONT);
+		lastVisitDateValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		
 		add(typeLabel, new GridBagConstraints(0, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 5), 0, 0));
 		add(typeValue, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
@@ -76,7 +88,7 @@ public class EditableMedicalRecordInfo extends AInfo
 		add(numberValue, new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 0), 0, 0));
 		
 		add(lastVisitDateLabel, new GridBagConstraints(0, 1, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 0, 0, 5), 0, 0));
-		add(lastVisitDateValue, new GridBagConstraints(1, 1, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 0), 0, 0));
+		add(lastVisitDateValue, new GridBagConstraints(1, 1, 3, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 0), 0, 0));
 	}
 	
 	

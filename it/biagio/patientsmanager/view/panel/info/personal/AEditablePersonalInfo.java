@@ -31,6 +31,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.text.ParseException;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
@@ -47,19 +48,19 @@ import it.biagio.patientsmanager.view.panel.info.AInfo;
 @SuppressWarnings("serial")
 public abstract class AEditablePersonalInfo extends AInfo
 {
-	private JLabel surnameLabel;
+	protected JLabel surnameLabel;
 	
 	protected JTextField surnameValue;
 	
-	private JLabel nameLabel;
+	protected JLabel nameLabel;
 	
 	protected JTextField nameValue;
 	
-	private JLabel birthdateLabel;
+	protected JLabel birthdateLabel;
 	
 	protected JTextField birthdateValue;
 	
-	private JLabel genderLabel;
+	protected JLabel genderLabel;
 	
 	private TransparentPanel genderPanel;
 	
@@ -69,7 +70,7 @@ public abstract class AEditablePersonalInfo extends AInfo
 	
 	protected JRadioButton femaleValue;
 	
-	private JLabel taxcodeLabel;
+	protected JLabel taxcodeLabel;
 	
 	protected JTextField taxcodeValue;
 	
@@ -79,29 +80,46 @@ public abstract class AEditablePersonalInfo extends AInfo
 		super(Const.PERSONAL_INFO_TITLE);
 		
 		surnameLabel = new JLabel(Const.PERSONAL_INFO_SURNAME);
+		surnameLabel.setFont(Const.BOLD_FONT);
+		surnameLabel.setForeground(Const.INFO_PANELS_REQUIRED_FIELD_FOREGROUND_COLOR);
 		surnameValue = new JTextField();
+		surnameValue.setFont(Const.PLAIN_FONT);
+		surnameValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		
 		nameLabel = new JLabel(Const.PERSONAL_INFO_NAME);
+		nameLabel.setFont(Const.BOLD_FONT);
+		nameLabel.setForeground(Const.INFO_PANELS_REQUIRED_FIELD_FOREGROUND_COLOR);
 		nameValue = new JTextField();
+		nameValue.setFont(Const.PLAIN_FONT);
+		nameValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		
 		birthdateLabel = new JLabel(Const.PERSONAL_INFO_BIRTHDATE);
+		birthdateLabel.setFont(Const.BOLD_FONT);
 		birthdateValue = new JTextField();
+		birthdateValue.setFont(Const.PLAIN_FONT);
+		birthdateValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		
 		genderLabel = new JLabel(Const.PERSONAL_INFO_GENDER);
+		genderLabel.setFont(Const.BOLD_FONT);
+		genderLabel.setForeground(Const.INFO_PANELS_REQUIRED_FIELD_FOREGROUND_COLOR);
 		maleValue = new JRadioButton(Const.PERSONAL_INFO_MALE, true);
+		maleValue.setFont(Const.PLAIN_FONT);
 		maleValue.setOpaque(false);
 		femaleValue = new JRadioButton(Const.PERSONAL_INFO_FEMALE, false);
+		femaleValue.setFont(Const.PLAIN_FONT);
 		femaleValue.setOpaque(false);
 		genderButtonGroup = new ButtonGroup();
 		genderButtonGroup.add(maleValue);
 		genderButtonGroup.add(femaleValue);
-		genderLabel = new JLabel(Const.PERSONAL_INFO_GENDER);
 		genderPanel = new TransparentPanel(new GridLayout(1, 2, 10, 0));
 		genderPanel.add(maleValue);
 		genderPanel.add(femaleValue);
 		
 		taxcodeLabel = new JLabel(Const.PERSONAL_INFO_TAXCODE);
+		taxcodeLabel.setFont(Const.BOLD_FONT);
 		taxcodeValue = new JTextField();
+		taxcodeValue.setFont(Const.PLAIN_FONT);
+		taxcodeValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		
 		add(surnameLabel, new GridBagConstraints(0, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 5), 0, 0));
 		add(surnameValue, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
@@ -127,6 +145,7 @@ public abstract class AEditablePersonalInfo extends AInfo
 			nameValue.setText(personalInfo.getName());
 			birthdateValue.setText(DateConverter.dateToString(personalInfo.getBirthdate()));
 			maleValue.setSelected(personalInfo.isMale());
+			femaleValue.setSelected(!personalInfo.isMale());
 			taxcodeValue.setText(personalInfo.getTaxcode());
 		}
 	}

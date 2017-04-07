@@ -50,7 +50,9 @@ public class UneditableDoctorPersonalInfo extends AUneditablePersonalInfo
 		super();
 		
 		specializationLabel = new JLabel(Const.PERSONAL_INFO_SPECIALIZATION);
+		specializationLabel.setFont(Const.PLAIN_FONT);
 		specializationValue = new JLabel();
+		specializationValue.setFont(Const.BOLD_FONT);
 		
 		add(specializationLabel, new GridBagConstraints(2, 2, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 5), 0, 0));
 		add(specializationValue, new GridBagConstraints(3, 2, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 0), 0, 0));

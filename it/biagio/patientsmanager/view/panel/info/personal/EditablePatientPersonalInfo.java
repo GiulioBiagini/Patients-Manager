@@ -30,6 +30,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.text.ParseException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -52,8 +53,16 @@ public class EditablePatientPersonalInfo extends AEditablePersonalInfo
 	public EditablePatientPersonalInfo() {
 		super();
 		
+		birthdateLabel.setForeground(Const.INFO_PANELS_REQUIRED_FIELD_FOREGROUND_COLOR);
+		
+		taxcodeLabel.setForeground(Const.INFO_PANELS_REQUIRED_FIELD_FOREGROUND_COLOR);
+		
 		professionLabel = new JLabel(Const.PERSONAL_INFO_PROFESSION);
+		professionLabel.setFont(Const.BOLD_FONT);
+		professionLabel.setForeground(Const.INFO_PANELS_REQUIRED_FIELD_FOREGROUND_COLOR);
 		professionValue = new JTextField();
+		professionValue.setFont(Const.PLAIN_FONT);
+		professionValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		
 		add(professionLabel, new GridBagConstraints(2, 2, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 5), 0, 0));
 		add(professionValue, new GridBagConstraints(3, 2, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 0), 0, 0));

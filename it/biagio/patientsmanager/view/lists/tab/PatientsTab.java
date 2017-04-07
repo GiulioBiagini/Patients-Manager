@@ -33,6 +33,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
+import javax.swing.border.TitledBorder;
 
 import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.utils.TransparentPanel;
@@ -60,6 +61,7 @@ public class PatientsTab extends ATab
 		this.observer = observer;
 		
 		lastVisitCurrentYearCheckBox = new JCheckBox(Const.CURRENT_YEAR_FILTER_TEXT);
+		lastVisitCurrentYearCheckBox.setFont(Const.PLAIN_FONT);
 		lastVisitCurrentYearCheckBox.setOpaque(false);
 		lastVisitCurrentYearCheckBox.addActionListener(new ActionListener() {
 			@Override
@@ -72,7 +74,10 @@ public class PatientsTab extends ATab
 		filtersPanel = new TransparentPanel(new GridLayout(1, 1));
 		filtersPanel.setBorder(BorderFactory.createTitledBorder(
 			BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true),
-			Const.FILTERS_LABEL
+			Const.FILTERS_LABEL,
+			TitledBorder.DEFAULT_JUSTIFICATION,
+			TitledBorder.DEFAULT_POSITION,
+			Const.BOLD_FONT
 		));
 		filtersPanel.add(lastVisitCurrentYearCheckBox);
 		

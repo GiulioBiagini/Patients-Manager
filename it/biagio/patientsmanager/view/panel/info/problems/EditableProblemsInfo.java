@@ -26,6 +26,7 @@ package it.biagio.patientsmanager.view.panel.info.problems;
 
 
 
+import it.biagio.patientsmanager.Const;
 import it.biagio.patientsmanager.model.entities.info.problems.ProblemsInfo;
 
 
@@ -36,6 +37,8 @@ public class EditableProblemsInfo extends UneditableProblemsInfo
 	public EditableProblemsInfo() {
 		super();
 		
+		heartProblemsLabel.setFont(Const.BOLD_FONT);
+		heartProblemsValue.setFont(Const.PLAIN_FONT);
 		heartProblemsValue.setEditable(true);
 	}
 	

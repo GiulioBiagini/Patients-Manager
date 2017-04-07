@@ -57,6 +57,7 @@ public class ListsPanel extends JTabbedPane implements PatientsTabObserver, Doct
 	public ListsPanel(ListsPanelObserver observer) {
 		super();
 		setBackground(Const.PANEL_BACKGROUND_COLOR);
+		setFont(Const.BOLD_FONT);
 		addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -77,8 +78,17 @@ public class ListsPanel extends JTabbedPane implements PatientsTabObserver, Doct
 	
 	
 	private void actionChange() {
-		patientsTab.clearListSelection();
-		doctorsTab.clearListSelection();
+		try {
+			if (observer != null) {
+				if (getSelectedComponent().equals(patientsTab))
+					observer.onPatientSelection((Patient) patientsTab.getSelectedValue());
+				else
+					observer.onDoctorSelection((Doctor) doctorsTab.getSelectedValue());
+			}
+		// during initalization a change is fired but objects managed by the observer are still not initialized
+		} catch (NullPointerException ex) {
+			
+		}
 	}
 	
 	

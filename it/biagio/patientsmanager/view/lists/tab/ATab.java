@@ -77,8 +77,11 @@ public abstract class ATab extends JPanel
 		this.observer = observer;
 		
 		searchLabel = new JLabel(Const.SEARCH_LABEL, Const.SEARCH_ICON, JLabel.LEFT);
+		searchLabel.setFont(Const.BOLD_FONT);
 		
 		searchTextField = new JTextField();
+		searchTextField.setFont(Const.PLAIN_FONT);
+		searchTextField.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
 		searchTextField.addCaretListener(new CaretListener() {
 			@Override
 			public void caretUpdate(CaretEvent e) {
@@ -87,6 +90,7 @@ public abstract class ATab extends JPanel
 		});
 		
 		list = new JList<AEntity>();
+		list.setFont(Const.PLAIN_FONT);
 		list.setBackground(Const.PANEL_BACKGROUND_COLOR);
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.addListSelectionListener(new ListSelectionListener() {
@@ -132,13 +136,10 @@ public abstract class ATab extends JPanel
 	
 	public void setListData(AEntity[] listData) {
 		list.setListData(listData);
+		actionSelection();
 	}
 	
 	public AEntity getSelectedValue() {
 		return list.getSelectedValue();
-	}
-	
-	public void clearListSelection() {
-		list.clearSelection();
 	}
 }

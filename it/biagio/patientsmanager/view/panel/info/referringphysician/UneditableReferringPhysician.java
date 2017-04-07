@@ -48,6 +48,7 @@ public class UneditableReferringPhysician extends AInfo
 		super(Const.REFERRING_PHYSICIAN_INFO_TITLE);
 		
 		referringPhysicianValue = new JLabel();
+		referringPhysicianValue.setFont(Const.BOLD_FONT);
 		
 		add(referringPhysicianValue, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0));
 	}

@@ -50,7 +50,9 @@ public class UneditablePatientPersonalInfo extends AUneditablePersonalInfo
 		super();
 		
 		professionLabel = new JLabel(Const.PERSONAL_INFO_PROFESSION);
+		professionLabel.setFont(Const.PLAIN_FONT);
 		professionValue = new JLabel();
+		professionValue.setFont(Const.BOLD_FONT);
 		
 		add(professionLabel, new GridBagConstraints(2, 2, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 5), 0, 0));
 		add(professionValue, new GridBagConstraints(3, 2, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(5, 5, 0, 0), 0, 0));
