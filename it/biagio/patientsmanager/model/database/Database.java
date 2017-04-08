@@ -207,6 +207,9 @@ public class Database
 		if (!oldPatientId.equals(newPatientId) && patientsHashMap.get(newPatientId) != null)
 			throw new DatabaseException("impossibile modificare il paziente", "un paziente con lo stesso codice fiscale è già presente all'interno del database");
 		
+		// keep old account info data
+		newPatient.setAccountInfo(oldPatient.getAccountInfo());
+		
 		IO.writePatient(newPatient, getDoctorId(newPatient.getReferringPhysician()), new File(PATIENTS_DIR, newPatientId));
 		patientsHashMap.put(newPatientId, newPatient);
 		patientsOrderedList.add(newPatient);
@@ -235,6 +238,7 @@ public class Database
 		if (!oldDoctorId.equals(newDoctorId) && doctorsHashMap.get(newDoctorId) != null)
 			throw new DatabaseException("impossibile modificare il medico", "un medico con lo stesso nome+cognome è già presente all'interno del database");
 		
+		// keep old account info data
 		newDoctor.setAccountInfo(oldDoctor.getAccountInfo());
 		
 		IO.writeDoctor(newDoctor, new File(DOCTORS_DIR, newDoctorId));
