@@ -225,7 +225,7 @@ public class Const
 	
 	
 	
-	public static final String ADD_PATIENT_BUTTON_TOOL_TIP_TEXT = "Addiungi paziente";
+	public static final String ADD_PATIENT_BUTTON_TOOL_TIP_TEXT = "Aggiungi paziente";
 	
 	public static final String ADD_DOCTOR_BUTTON_TOOL_TIP_TEXT = "Aggiungi medico";
 	

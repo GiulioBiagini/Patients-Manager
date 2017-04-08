@@ -48,7 +48,7 @@ public class DateConverter
 	/**
 	 * The format of the time
 	 */
-	public static final String TIME_FORMAT = "hh:mm";
+	public static final String TIME_FORMAT = "HH:mm:ss";
 	
 	/**
 	 * The format of the date and time together

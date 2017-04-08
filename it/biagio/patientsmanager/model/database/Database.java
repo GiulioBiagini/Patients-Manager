@@ -235,6 +235,8 @@ public class Database
 		if (!oldDoctorId.equals(newDoctorId) && doctorsHashMap.get(newDoctorId) != null)
 			throw new DatabaseException("impossibile modificare il medico", "un medico con lo stesso nome+cognome è già presente all'interno del database");
 		
+		newDoctor.setAccountInfo(oldDoctor.getAccountInfo());
+		
 		IO.writeDoctor(newDoctor, new File(DOCTORS_DIR, newDoctorId));
 		doctorsHashMap.put(newDoctorId, newDoctor);
 		doctorsOrderedList.add(newDoctor);

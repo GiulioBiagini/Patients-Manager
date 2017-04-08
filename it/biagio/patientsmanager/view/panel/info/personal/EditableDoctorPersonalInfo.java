@@ -53,7 +53,7 @@ public class EditableDoctorPersonalInfo extends AEditablePersonalInfo
 	public EditableDoctorPersonalInfo() {
 		super();
 		
-		specializationLabel = new JLabel(Const.PERSONAL_INFO_PROFESSION);
+		specializationLabel = new JLabel(Const.PERSONAL_INFO_SPECIALIZATION);
 		specializationLabel.setFont(Const.BOLD_FONT);
 		specializationValue = new JTextField();
 		specializationValue.setFont(Const.PLAIN_FONT);
