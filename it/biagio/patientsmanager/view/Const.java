@@ -169,7 +169,7 @@ public class Const
 	
 	public static final String ACCOUNT_INFO_CREATION_DATE = "Data di creazione:";
 	
-	public static final String ACCOUNT_INFO_CLOSING_DATE = "Data di chiusura:";
+	public static final String ACCOUNT_INFO_CREATION_TIME = "Orario di creazione:";
 	
 	public static final String PERSONAL_INFO_TITLE = "Informazioni personali";
 	
@@ -265,7 +265,7 @@ public class Const
 	
 	public static final Icon CONFIRM_BUTTON_ICON = IconFontSwing.buildIcon(FontAwesome.CHECK, 28, BUTTON_FOREGROUND_COLOR);
 	
-	public static final Icon DISCARD_BUTTON_ICON = IconFontSwing.buildIcon(FontAwesome.TIMES, 28, BUTTON_FOREGROUND_COLOR);
+	public static final Icon DISCARD_BUTTON_ICON = IconFontSwing.buildIcon(FontAwesome.ARROW_LEFT, 28, BUTTON_FOREGROUND_COLOR);
 	
 	
 	

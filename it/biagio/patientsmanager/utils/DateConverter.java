@@ -46,9 +46,29 @@ public class DateConverter
 	public static final String DATE_FORMAT = "dd/MM/yyyy";
 	
 	/**
-	 * The object used to convert Data to String and viceversa
+	 * The format of the time
+	 */
+	public static final String TIME_FORMAT = "hh:mm";
+	
+	/**
+	 * The format of the date and time together
+	 */
+	public static final String DATE_TIME_FORMAT = DATE_FORMAT + " - " + TIME_FORMAT;
+	
+	/**
+	 * The object used to convert data to String and viceversa
 	 */
 	private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT);
+	
+	/**
+	 * The object used to convert time to String and viceversa
+	 */
+	private static final SimpleDateFormat SIMPLE_TIME_FORMAT = new SimpleDateFormat(TIME_FORMAT);
+	
+	/**
+	 * The object used to convert data and time to String and viceversa
+	 */
+	private static final SimpleDateFormat SIMPLE_DATE_TIME_FORMAT = new SimpleDateFormat(DATE_TIME_FORMAT);
 	
 	
 	
@@ -66,6 +86,32 @@ public class DateConverter
 	}
 	
 	/**
+	 * Convert a string representing time to a Date object
+	 * 
+	 * @param date - the string to be converted
+	 * @return a Date object, null if the string is null or empty
+	 * @throws ParseException - if the string doesn't match the TIME_FORMAT
+	 */
+	public static Date stringToTime(String date) throws ParseException {
+		if (date == null || date.isEmpty())
+			return null;
+		return SIMPLE_TIME_FORMAT.parse(date);
+	}
+	
+	/**
+	 * Convert a string representing a date and time to a Date object
+	 * 
+	 * @param date - the string to be converted
+	 * @return a Date object, null if the string is null or empty
+	 * @throws ParseException - if the string doesn't match the DATE_TIME_FORMAT
+	 */
+	public static Date stringToDateTime(String date) throws ParseException {
+		if (date == null || date.isEmpty())
+			return null;
+		return SIMPLE_DATE_TIME_FORMAT.parse(date);
+	}
+	
+	/**
 	 * Convert a Date to a string according to the DATE_FORMAT
 	 * 
 	 * @param date - the date to be converted
@@ -73,5 +119,25 @@ public class DateConverter
 	 */
 	public static String dateToString(Date date) {
 		return date == null ? "" : SIMPLE_DATE_FORMAT.format(date);
+	}
+	
+	/**
+	 * Convert a Date to a string according to the DATE_FORMAT
+	 * 
+	 * @param date - the date to be converted
+	 * @return a String object, an empty string if the date is null
+	 */
+	public static String timeToString(Date date) {
+		return date == null ? "" : SIMPLE_TIME_FORMAT.format(date);
+	}
+	
+	/**
+	 * Convert a Date to a string according to the DATE_FORMAT
+	 * 
+	 * @param date - the date to be converted
+	 * @return a String object, an empty string if the date is null
+	 */
+	public static String dateTimeToString(Date date) {
+		return date == null ? "" : SIMPLE_DATE_TIME_FORMAT.format(date);
 	}
 }

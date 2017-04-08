@@ -203,22 +203,20 @@ public class Database
 		String newPatientId = getPatientId(newPatient);
 		if (newPatientId == null)
 			throw new DatabaseException("impossibile modificare il paziente", "nuovo paziente nullo");
-		
-		// different ids
-		if (!oldPatientId.equals(newPatientId)) {
-			// new patient already exists
-			if (patientsHashMap.get(newPatientId) != null)
-				throw new DatabaseException("impossibile modificare il paziente", "un paziente con lo stesso codice fiscale è già presente all'interno del database");
-			
-			IO.deletePatient(new File(PATIENTS_DIR, oldPatientId));
-			patientsHashMap.remove(oldPatientId);
-		}
-		
-		patientsOrderedList.remove(oldPatient);
+		// different ids and new patient already exists
+		if (!oldPatientId.equals(newPatientId) && patientsHashMap.get(newPatientId) != null)
+			throw new DatabaseException("impossibile modificare il paziente", "un paziente con lo stesso codice fiscale è già presente all'interno del database");
 		
 		IO.writePatient(newPatient, getDoctorId(newPatient.getReferringPhysician()), new File(PATIENTS_DIR, newPatientId));
 		patientsHashMap.put(newPatientId, newPatient);
 		patientsOrderedList.add(newPatient);
+		
+		// different ids
+		if (!oldPatientId.equals(newPatientId)) {
+			IO.deletePatient(new File(PATIENTS_DIR, oldPatientId));
+			patientsHashMap.remove(oldPatientId);
+		}
+		patientsOrderedList.remove(oldPatient);
 	}
 	
 	public static synchronized void editDoctor(Doctor oldDoctor, Doctor newDoctor) throws IOException, DatabaseException {
@@ -233,22 +231,44 @@ public class Database
 		String newDoctorId = getDoctorId(newDoctor);
 		if (newDoctorId == null)
 			throw new DatabaseException("impossibile modificare il medico", "nuovo medico nullo");
-		
-		// different ids
-		if (!oldDoctorId.equals(newDoctorId)) {
-			// new doctor already exists
-			if (doctorsHashMap.get(newDoctorId) != null)
-				throw new DatabaseException("impossibile modificare il medico", "un medico con lo stesso nome+cognome è già presente all'interno del database");
-			
-			IO.deleteDoctor(new File(DOCTORS_DIR, oldDoctorId));
-			doctorsHashMap.remove(oldDoctorId);
-		}
-		
-		doctorsOrderedList.remove(oldDoctor);
+		// different ids and new doctor already exists
+		if (!oldDoctorId.equals(newDoctorId) && doctorsHashMap.get(newDoctorId) != null)
+			throw new DatabaseException("impossibile modificare il medico", "un medico con lo stesso nome+cognome è già presente all'interno del database");
 		
 		IO.writeDoctor(newDoctor, new File(DOCTORS_DIR, newDoctorId));
 		doctorsHashMap.put(newDoctorId, newDoctor);
 		doctorsOrderedList.add(newDoctor);
+		
+		// different ids
+		if (!oldDoctorId.equals(newDoctorId)) {
+			IO.deleteDoctor(new File(DOCTORS_DIR, oldDoctorId));
+			doctorsHashMap.remove(oldDoctorId);
+		}
+		doctorsOrderedList.remove(oldDoctor);
+		
+		// update patients whose referring physician is the edited doctor (which changed id)
+		if (!oldDoctorId.equals(newDoctorId)) {
+			int patientsToEdit = 0;
+			int errorsWhileEditing = 0;
+			for (Patient patient : patientsOrderedList) {
+				Doctor referringPhysician = patient.getReferringPhysician();
+				if (referringPhysician != null && referringPhysician.equals(oldDoctor)) {
+					patientsToEdit++;
+					try {
+						IO.writePatient(patient, newDoctorId, new File(PATIENTS_DIR, getPatientId(patient)));
+						patient.setReferringPhysician(newDoctor);
+					} catch (IOException ex) {
+						errorsWhileEditing++;
+					}
+				}
+			}
+			if (errorsWhileEditing > 0)
+				throw new DatabaseException(
+					"errori nell'aggiornamento del medico di riferimento dei pazienti",
+					"non aggiornat" + (errorsWhileEditing == 1 ? "o un paziente" : "i " + errorsWhileEditing + " pazienti") +
+					" su " + (patientsToEdit == 1 ? "uno trovato" : patientsToEdit + " trovati")
+				);
+		}
 	}
 	
 	
@@ -285,6 +305,28 @@ public class Database
 		IO.deletePatient(new File(DOCTORS_DIR, doctorId));
 		doctorsHashMap.remove(doctorId);
 		doctorsOrderedList.remove(doctor);
+		
+		// update patients whose referring physician is the deleted doctor
+		int patientsToEdit = 0;
+		int errorsWhileEditing = 0;
+		for (Patient patient : patientsOrderedList) {
+			Doctor referringPhysician = patient.getReferringPhysician();
+			if (referringPhysician != null && referringPhysician.equals(doctor)) {
+				patientsToEdit++;
+				try {
+					IO.writePatient(patient, null, new File(PATIENTS_DIR, getPatientId(patient)));
+					patient.setReferringPhysician(null);
+				} catch (IOException ex) {
+					errorsWhileEditing++;
+				}
+			}
+		}
+		if (errorsWhileEditing > 0)
+			throw new DatabaseException(
+				"errori nell'aggiornamento del medico di riferimento dei pazienti",
+				"non aggiornat" + (errorsWhileEditing == 1 ? "o un paziente" : "i " + errorsWhileEditing + " pazienti") +
+				" su " + (patientsToEdit == 1 ? "uno trovato" : patientsToEdit + " trovati")
+			);
 	}
 	
 	

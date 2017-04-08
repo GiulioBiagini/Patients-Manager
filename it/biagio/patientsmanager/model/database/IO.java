@@ -101,8 +101,7 @@ public class IO
 			
 			// account info
 			AccountInfo accountInfo = patient.getAccountInfo();
-			bufferedWriter.write(DateConverter.dateToString(accountInfo.getCreationDate()) + LINE_SEPARATOR);
-			bufferedWriter.write(DateConverter.dateToString(accountInfo.getClosingDate()) + LINE_SEPARATOR);
+			bufferedWriter.write(DateConverter.dateTimeToString(accountInfo.getCreationDate()) + LINE_SEPARATOR);
 			// personal info
 			PatientPersonalInfo personalInfo = patient.getPersonalInfo();
 			bufferedWriter.write(personalInfo.getSurname().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
@@ -164,8 +163,7 @@ public class IO
 			
 			// account info
 			AccountInfo accountInfo = doctor.getAccountInfo();
-			bufferedWriter.write(DateConverter.dateToString(accountInfo.getCreationDate()) + LINE_SEPARATOR);
-			bufferedWriter.write(DateConverter.dateToString(accountInfo.getClosingDate()) + LINE_SEPARATOR);
+			bufferedWriter.write(DateConverter.dateTimeToString(accountInfo.getCreationDate()) + LINE_SEPARATOR);
 			// personal info
 			DoctorPersonalInfo personalInfo = doctor.getPersonalInfo();
 			bufferedWriter.write(personalInfo.getSurname().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
@@ -225,8 +223,7 @@ public class IO
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 			
 			AccountInfo accountInfo = new AccountInfo(
-				DateConverter.stringToDate(bufferedReader.readLine()),// creationDate
-				DateConverter.stringToDate(bufferedReader.readLine())// closingDate
+				DateConverter.stringToDateTime(bufferedReader.readLine())// creationDate
 			);
 			PatientPersonalInfo personalInfo = new PatientPersonalInfo(
 				bufferedReader.readLine(),// surname
@@ -267,7 +264,7 @@ public class IO
 		} catch (IllegalArgumentException ex) {
 			throw new IOException("impossibile leggere i dati del paziente", ex.getMessage());
 		} catch (ParseException ex) {
-			throw new IOException("impossibile leggere i dati del paziente", "formato date non corretto (" + DateConverter.DATE_FORMAT + ")");
+			throw new IOException("impossibile leggere i dati del paziente", "formato date non corretto");
 		} catch (java.io.IOException ex) {
 			throw new IOException("impossibile leggere i dati del paziente (errore di input/output)", ex.getMessage());
 		} catch (Exception ex) {
@@ -293,8 +290,7 @@ public class IO
 			BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
 			
 			AccountInfo accountInfo = new AccountInfo(
-				DateConverter.stringToDate(bufferedReader.readLine()),// creationDate
-				DateConverter.stringToDate(bufferedReader.readLine())// closingDate
+				DateConverter.stringToDateTime(bufferedReader.readLine())// creationDate
 			);
 			DoctorPersonalInfo personalInfo = new DoctorPersonalInfo(
 				bufferedReader.readLine(),// surname
@@ -322,7 +318,7 @@ public class IO
 		} catch (IllegalArgumentException ex) {
 			throw new IOException("impossibile leggere i dati del medico", ex.getMessage());
 		} catch (ParseException ex) {
-			throw new IOException("I/O - impossibile leggere i dati del medico", "formato date non corretto (" + DateConverter.DATE_FORMAT + ")");
+			throw new IOException("I/O - impossibile leggere i dati del medico", "formato date non corretto");
 		} catch (java.io.IOException ex) {
 			throw new IOException("impossibile leggere i dati del medico (errore di input/output)", ex.getMessage());
 		} catch (Exception ex) {

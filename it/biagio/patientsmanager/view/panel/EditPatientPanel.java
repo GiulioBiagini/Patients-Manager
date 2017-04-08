@@ -100,7 +100,7 @@ public class EditPatientPanel extends APanel
 	
 	public Patient getPatient() throws ParseException, IllegalArgumentException {
 		return new Patient(
-			new AccountInfo(new Date(), null),
+			new AccountInfo(new Date()),
 			editablePatientPersonalInfo.getPersonalInfo(),
 			editableMedicalRecordInfo.getMedicalRecordInfo(),
 			editableAddressInfo.getAddressInfo(),

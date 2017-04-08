@@ -78,7 +78,7 @@ public class AddDoctorPanel extends APanel
 	
 	public Doctor getDoctor() throws ParseException, IllegalArgumentException {
 		return new Doctor(
-			new AccountInfo(new Date(), null),
+			new AccountInfo(new Date()),
 			editableDoctorPersonalInfo.getPersonalInfo(),
 			editableAddressInfo.getAddressInfo(),
 			editableContactsInfo.getContactsInfo()

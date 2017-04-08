@@ -251,7 +251,7 @@ public class MainFrame extends JFrame implements ListsPanelObserver, OperationsP
 		operationsPanel.setDeleteButtonEnabled(false);
 		addPatientPanel.reset();
 		middlePanel.add(addPatientPanel);
-		operationsPanel.showConfirmationOperations();
+		operationsPanel.showConfirmationSuccessOperations();
 		middlePanel.revalidate();
 		middlePanel.repaint();
 	}
@@ -263,7 +263,7 @@ public class MainFrame extends JFrame implements ListsPanelObserver, OperationsP
 		operationsPanel.setDeleteButtonEnabled(false);
 		addDoctorPanel.reset();
 		middlePanel.add(addDoctorPanel);
-		operationsPanel.showConfirmationOperations();
+		operationsPanel.showConfirmationSuccessOperations();
 		middlePanel.revalidate();
 		middlePanel.repaint();
 	}
@@ -278,7 +278,7 @@ public class MainFrame extends JFrame implements ListsPanelObserver, OperationsP
 			editDoctorPanel.setDoctor(listsPanel.getSelectedDoctor());
 			middlePanel.add(editDoctorPanel);
 		}
-		operationsPanel.showConfirmationOperations();
+		operationsPanel.showConfirmationWarningOperations();
 		middlePanel.revalidate();
 		middlePanel.repaint();
 	}
@@ -293,7 +293,7 @@ public class MainFrame extends JFrame implements ListsPanelObserver, OperationsP
 			deleteDoctorPanel.setDoctor(listsPanel.getSelectedDoctor());
 			middlePanel.add(deleteDoctorPanel);
 		}
-		operationsPanel.showConfirmationOperations();
+		operationsPanel.showConfirmationDangerOperations();
 		middlePanel.revalidate();
 		middlePanel.repaint();
 	}
@@ -323,10 +323,15 @@ public class MainFrame extends JFrame implements ListsPanelObserver, OperationsP
 			} else if (displayedComponent.equals(deletePatientPanel)) {
 				if (observer != null)
 					observer.onDeletePatient(listsPanel.getSelectedPatient());
-			} else if (displayedComponent.equals(deleteDoctorPanel)) {
-				if (observer != null)
-					observer.onDeleteDoctor(listsPanel.getSelectedDoctor());
-			}
+			} else if (
+				displayedComponent.equals(deleteDoctorPanel) &&
+				MessageFactory.questionDialog(this, "L'eliminazione di questo medico comporterà l'aggiornamento del campo" + LINE_SEPARATOR +
+					"\"Medico di riferimento\" dei pazienti che lo usavano come riferimento." + LINE_SEPARATOR +
+					"Il nuovo valore sarà impostato a \"nessun medico di riferimento\"." + LINE_SEPARATOR +
+					"Eliminare il medico?") &&
+				observer != null
+			)
+				observer.onDeleteDoctor(listsPanel.getSelectedDoctor());
 		} catch (ParseException ex) {
 			MessageFactory.errorDialog(this, "Impossibile completare l'operazione:" + LINE_SEPARATOR + "formato date non corretto (" + DateConverter.DATE_FORMAT + ")");
 		} catch (IllegalArgumentException ex) {

@@ -62,9 +62,13 @@ public class OperationsPanel extends JPanel
 	
 	private TransparentPanel confirmationMiddlePanel;
 	
-	private SuccessButton confirmButton;
+	private PrimaryButton discardButton;
 	
-	private DangerButton discardButton;
+	private SuccessButton confirmSuccessButton;
+	
+	private WarningButton confirmWarningButton;
+	
+	private DangerButton confirmDangerButton;
 	
 	
 	
@@ -134,7 +138,20 @@ public class OperationsPanel extends JPanel
 			}
 		);
 		
-		confirmButton = new SuccessButton(
+		
+		
+		discardButton = new PrimaryButton(
+				Const.DISCARD_BUTTON_ICON,
+				Const.DISCARD_BUTTON_TOOL_TIP_TEXT,
+				new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						actionDiscard();
+					}
+				}
+			);
+		
+		confirmSuccessButton = new SuccessButton(
 			Const.CONFIRM_BUTTON_ICON,
 			Const.CONFIRM_BUTTON_TOOL_TIP_TEXT,
 			new ActionListener() {
@@ -145,16 +162,29 @@ public class OperationsPanel extends JPanel
 			}
 		);
 		
-		discardButton = new DangerButton(
-			Const.DISCARD_BUTTON_ICON,
-			Const.DISCARD_BUTTON_TOOL_TIP_TEXT,
+		confirmWarningButton = new WarningButton(
+			Const.CONFIRM_BUTTON_ICON,
+			Const.CONFIRM_BUTTON_TOOL_TIP_TEXT,
 			new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					actionDiscard();
+					actionConfirm();
 				}
 			}
 		);
+		
+		confirmDangerButton = new DangerButton(
+			Const.CONFIRM_BUTTON_ICON,
+			Const.CONFIRM_BUTTON_TOOL_TIP_TEXT,
+			new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					actionConfirm();
+				}
+			}
+		);
+		
+		
 		
 		mainMiddlePanel = new TransparentPanel(new GridLayout(1, 5, 10, 0));
 		mainMiddlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -166,8 +196,8 @@ public class OperationsPanel extends JPanel
 		
 		confirmationMiddlePanel = new TransparentPanel(new GridLayout(1, 2, 10, 0));
 		confirmationMiddlePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-		confirmationMiddlePanel.add(confirmButton);
 		confirmationMiddlePanel.add(discardButton);
+		confirmationMiddlePanel.add(confirmSuccessButton);
 		
 		add(mainMiddlePanel, BorderLayout.CENTER);
 	}
@@ -218,8 +248,40 @@ public class OperationsPanel extends JPanel
 		repaint();
 	}
 	
-	public void showConfirmationOperations() {
+	public void showConfirmationSuccessOperations() {
 		removeAll();
+		if (!confirmationMiddlePanel.getComponent(1).equals(confirmSuccessButton)) {
+			confirmationMiddlePanel.remove(1);
+			confirmationMiddlePanel.add(confirmSuccessButton);
+			confirmationMiddlePanel.revalidate();
+			confirmationMiddlePanel.repaint();
+		}
+		add(confirmationMiddlePanel, BorderLayout.CENTER);
+		revalidate();
+		repaint();
+	}
+	
+	public void showConfirmationWarningOperations() {
+		removeAll();
+		if (!confirmationMiddlePanel.getComponent(1).equals(confirmWarningButton)) {
+			confirmationMiddlePanel.remove(1);
+			confirmationMiddlePanel.add(confirmWarningButton);
+			confirmationMiddlePanel.revalidate();
+			confirmationMiddlePanel.repaint();
+		}
+		add(confirmationMiddlePanel, BorderLayout.CENTER);
+		revalidate();
+		repaint();
+	}
+	
+	public void showConfirmationDangerOperations() {
+		removeAll();
+		if (!confirmationMiddlePanel.getComponent(1).equals(confirmDangerButton)) {
+			confirmationMiddlePanel.remove(1);
+			confirmationMiddlePanel.add(confirmDangerButton);
+			confirmationMiddlePanel.revalidate();
+			confirmationMiddlePanel.repaint();
+		}
 		add(confirmationMiddlePanel, BorderLayout.CENTER);
 		revalidate();
 		repaint();

@@ -45,9 +45,9 @@ public class UneditableAccountInfo extends AInfo
 	
 	private JLabel creationDateValue;
 	
-	private JLabel closingDateLabel;
+	private JLabel creationTimeLabel;
 	
-	private JLabel closingDateValue;
+	private JLabel creationTimeValue;
 	
 	
 	
@@ -59,16 +59,16 @@ public class UneditableAccountInfo extends AInfo
 		creationDateValue = new JLabel();
 		creationDateValue.setFont(Const.BOLD_FONT);
 		
-		closingDateLabel = new JLabel(Const.ACCOUNT_INFO_CLOSING_DATE);
-		closingDateLabel.setFont(Const.PLAIN_FONT);
-		closingDateValue = new JLabel();
-		closingDateValue.setFont(Const.BOLD_FONT);
+		creationTimeLabel = new JLabel(Const.ACCOUNT_INFO_CREATION_TIME);
+		creationTimeLabel.setFont(Const.PLAIN_FONT);
+		creationTimeValue = new JLabel();
+		creationTimeValue.setFont(Const.BOLD_FONT);
 		
 		add(creationDateLabel, new GridBagConstraints(0, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 5), 0, 0));
 		add(creationDateValue, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 5), 0, 0));
 		
-		add(closingDateLabel, new GridBagConstraints(2, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 5), 0, 0));
-		add(closingDateValue, new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
+		add(creationTimeLabel, new GridBagConstraints(2, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 5), 0, 0));
+		add(creationTimeValue, new GridBagConstraints(3, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 0, 0), 0, 0));
 	}
 	
 	
@@ -76,7 +76,7 @@ public class UneditableAccountInfo extends AInfo
 	public void setAccountInfo(AccountInfo accountInfo) {
 		if (accountInfo != null) {
 			creationDateValue.setText(DateConverter.dateToString(accountInfo.getCreationDate()));
-			closingDateValue.setText(DateConverter.dateToString(accountInfo.getClosingDate()));
+			creationTimeValue.setText(DateConverter.timeToString(accountInfo.getCreationDate()));
 		}
 	}
 }

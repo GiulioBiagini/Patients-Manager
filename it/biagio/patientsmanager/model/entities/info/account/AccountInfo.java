@@ -42,22 +42,16 @@ public class AccountInfo extends AInfo
 	/** The creation date */
 	private Date creationDate;
 	
-	/** The closing date */
-	private Date closingDate;
-	
 	
 	
 	/**
 	 * Create a new info object for the account management
 	 * 
 	 * @param creationDate - the date of creation (can't be null)
-	 * @param closingDate - the date of closing, null if the account is still open
-	 * @throws IllegalArgumentException - if creation date is null or closing date
-	 * is not null but is before creation date
+	 * @throws IllegalArgumentException - if creation date is null
 	 */
-	public AccountInfo(Date creationDate, Date closingDate) {
+	public AccountInfo(Date creationDate) {
 		setCreationDate(creationDate);
-		setClosingDate(closingDate);
 	}
 	
 	
@@ -76,20 +70,6 @@ public class AccountInfo extends AInfo
 		this.creationDate = creationDate;
 	}
 	
-	/**
-	 * Set a closing date
-	 * 
-	 * @param closingDate - the date of closing, null if the account is still open
-	 * @throws IllegalArgumentException - if closing date is not null and is before creation date
-	 */
-	public void setClosingDate(Date closingDate) throws IllegalArgumentException {
-		if (closingDate != null && closingDate.before(creationDate))
-			throw new IllegalArgumentException(
-				"data di chiusura del profilo precedente alla data di creazione dello stesso"
-			);
-		this.closingDate = closingDate;
-	}
-	
 	
 	
 	/**
@@ -99,14 +79,5 @@ public class AccountInfo extends AInfo
 	 */
 	public Date getCreationDate() {
 		return creationDate;
-	}
-	
-	/**
-	 * Get the closing date
-	 * 
-	 * @return the date of closing, null if the account is still open
-	 */
-	public Date getClosingDate() {
-		return closingDate;
 	}
 }
