@@ -30,12 +30,17 @@ import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.text.ParseException;
+import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import it.biagio.patientsmanager.model.entities.info.personal.APersonalInfo;
 import it.biagio.patientsmanager.utils.DateConverter;
@@ -58,7 +63,13 @@ public abstract class AEditablePersonalInfo extends AInfo
 	
 	protected JLabel birthdateLabel;
 	
-	protected JTextField birthdateValue;
+	private UtilDateModel utilDateModel;
+	
+	private Properties properties;
+	
+	private JDatePanelImpl datePanelImpl;
+	
+	protected JDatePickerImpl birthdateValue;
 	
 	protected JLabel genderLabel;
 	
@@ -95,9 +106,14 @@ public abstract class AEditablePersonalInfo extends AInfo
 		
 		birthdateLabel = new JLabel(Const.PERSONAL_INFO_BIRTHDATE);
 		birthdateLabel.setFont(Const.BOLD_FONT);
-		birthdateValue = new JTextField();
-		birthdateValue.setFont(Const.PLAIN_FONT);
-		birthdateValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
+		utilDateModel = new UtilDateModel();
+		utilDateModel.setSelected(true);
+		properties = new Properties();
+		properties.put("text.today", "Oggi");
+		properties.put("text.month", "Mese");
+		properties.put("text.year", "Anno");
+		datePanelImpl = new JDatePanelImpl(utilDateModel, properties);
+		birthdateValue = new JDatePickerImpl(datePanelImpl, DateConverter.DATE_PICKER_FORMATTER);
 		
 		genderLabel = new JLabel(Const.PERSONAL_INFO_GENDER);
 		genderLabel.setFont(Const.BOLD_FONT);
@@ -143,7 +159,7 @@ public abstract class AEditablePersonalInfo extends AInfo
 		if (personalInfo != null) {
 			surnameValue.setText(personalInfo.getSurname());
 			nameValue.setText(personalInfo.getName());
-			birthdateValue.setText(DateConverter.dateToString(personalInfo.getBirthdate()));
+			((UtilDateModel) birthdateValue.getModel()).setValue(personalInfo.getBirthdate());
 			maleValue.setSelected(personalInfo.isMale());
 			femaleValue.setSelected(!personalInfo.isMale());
 			taxcodeValue.setText(personalInfo.getTaxcode());
@@ -155,7 +171,7 @@ public abstract class AEditablePersonalInfo extends AInfo
 	public void reset() {
 		surnameValue.setText("");
 		nameValue.setText("");
-		birthdateValue.setText("");
+		((UtilDateModel) birthdateValue.getModel()).setValue(null);
 		maleValue.setSelected(true);
 		taxcodeValue.setText("");
 		

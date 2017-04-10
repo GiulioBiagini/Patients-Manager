@@ -29,10 +29,15 @@ package it.biagio.patientsmanager.view.panel.info.medicalrecord;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.text.ParseException;
+import java.util.Properties;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
+import org.jdatepicker.impl.JDatePanelImpl;
+import org.jdatepicker.impl.JDatePickerImpl;
+import org.jdatepicker.impl.UtilDateModel;
 
 import it.biagio.patientsmanager.model.entities.info.medicalrecord.MedicalRecordInfo;
 import it.biagio.patientsmanager.utils.DateConverter;
@@ -54,7 +59,13 @@ public class EditableMedicalRecordInfo extends AInfo
 	
 	private JLabel lastVisitDateLabel;
 	
-	private JTextField lastVisitDateValue;
+	private UtilDateModel utilDateModel;
+	
+	private Properties properties;
+	
+	private JDatePanelImpl datePanelImpl;
+	
+	protected JDatePickerImpl lastVisitDateValue;
 	
 	
 	
@@ -77,9 +88,14 @@ public class EditableMedicalRecordInfo extends AInfo
 		
 		lastVisitDateLabel = new JLabel(Const.MEDICAL_RECORD_INFO_LAST_VISIT_DATE);
 		lastVisitDateLabel.setFont(Const.BOLD_FONT);
-		lastVisitDateValue = new JTextField();
-		lastVisitDateValue.setFont(Const.PLAIN_FONT);
-		lastVisitDateValue.setBorder(BorderFactory.createLineBorder(Const.PANEL_BORDER_COLOR, 1, true));
+		utilDateModel = new UtilDateModel();
+		utilDateModel.setSelected(true);
+		properties = new Properties();
+		properties.put("text.today", "Oggi");
+		properties.put("text.month", "Mese");
+		properties.put("text.year", "Anno");
+		datePanelImpl = new JDatePanelImpl(utilDateModel, properties);
+		lastVisitDateValue = new JDatePickerImpl(datePanelImpl, DateConverter.DATE_PICKER_FORMATTER);
 		
 		add(typeLabel, new GridBagConstraints(0, 0, 1, 1, 0.2, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 0, 5, 5), 0, 0));
 		add(typeValue, new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.HORIZONTAL, new Insets(0, 5, 5, 5), 0, 0));
@@ -96,20 +112,20 @@ public class EditableMedicalRecordInfo extends AInfo
 	public void setMedicalRecordInfo(MedicalRecordInfo medicalRecordInfo) {
 		typeValue.setText(medicalRecordInfo.getType());
 		numberValue.setText(medicalRecordInfo.getNumber());
-		lastVisitDateValue.setText(DateConverter.dateToString(medicalRecordInfo.getLastVisitDate()));
+		((UtilDateModel) lastVisitDateValue.getModel()).setValue(medicalRecordInfo.getLastVisitDate());
 	}
 	
 	public MedicalRecordInfo getMedicalRecordInfo() throws ParseException, IllegalArgumentException {
 		return new MedicalRecordInfo(
 			typeValue.getText(),
 			numberValue.getText(),
-			DateConverter.stringToDate(lastVisitDateValue.getText())
+			((UtilDateModel) lastVisitDateValue.getModel()).getValue()
 		);
 	}
 	
 	public void reset() {
 		typeValue.setText("");
 		numberValue.setText("");
-		lastVisitDateValue.setText("");
+		((UtilDateModel) lastVisitDateValue.getModel()).setValue(null);
 	}
 }

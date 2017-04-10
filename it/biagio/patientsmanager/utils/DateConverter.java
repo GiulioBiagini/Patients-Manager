@@ -28,7 +28,10 @@ package it.biagio.patientsmanager.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.JFormattedTextField;
 
 
 
@@ -69,6 +72,24 @@ public class DateConverter
 	 * The object used to convert data and time to String and viceversa
 	 */
 	private static final SimpleDateFormat SIMPLE_DATE_TIME_FORMAT = new SimpleDateFormat(DATE_TIME_FORMAT);
+	
+	
+	
+	/**
+	 * The object used by the jdatepicker to convert data
+	 */
+	@SuppressWarnings("serial")
+	public static final JFormattedTextField.AbstractFormatter DATE_PICKER_FORMATTER = new JFormattedTextField.AbstractFormatter() {
+		@Override
+		public String valueToString(Object value) throws ParseException {
+			return value == null ? "" : SIMPLE_DATE_FORMAT.format(((Calendar) value).getTime());
+		}
+		
+		@Override
+		public Object stringToValue(String text) throws ParseException {
+			return SIMPLE_DATE_FORMAT.parseObject(text);
+		}
+	};
 	
 	
 	

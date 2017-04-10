@@ -252,29 +252,30 @@ public class Database
 		}
 		doctorsOrderedList.remove(oldDoctor);
 		
-		// update patients whose referring physician is the edited doctor (which changed id)
-		if (!oldDoctorId.equals(newDoctorId)) {
-			int patientsToEdit = 0;
-			int errorsWhileEditing = 0;
-			for (Patient patient : patientsOrderedList) {
-				Doctor referringPhysician = patient.getReferringPhysician();
-				if (referringPhysician != null && referringPhysician.equals(oldDoctor)) {
-					patientsToEdit++;
-					try {
+		// update patients whose referring physician is the edited doctor
+		int patientsToEdit = 0;
+		int errorsWhileEditing = 0;
+		for (Patient patient : patientsOrderedList) {
+			Doctor referringPhysician = patient.getReferringPhysician();
+			if (referringPhysician != null && referringPhysician.equals(oldDoctor)) {
+				patientsToEdit++;
+				try {
+					// write only if id changed
+					if (!oldDoctorId.equals(newDoctorId))
 						IO.writePatient(patient, newDoctorId, new File(PATIENTS_DIR, getPatientId(patient)));
-						patient.setReferringPhysician(newDoctor);
-					} catch (IOException ex) {
-						errorsWhileEditing++;
-					}
+					// update always
+					patient.setReferringPhysician(newDoctor);
+				} catch (IOException ex) {
+					errorsWhileEditing++;
 				}
 			}
-			if (errorsWhileEditing > 0)
-				throw new DatabaseException(
-					"errori nell'aggiornamento del medico di riferimento dei pazienti",
-					"non aggiornat" + (errorsWhileEditing == 1 ? "o un paziente" : "i " + errorsWhileEditing + " pazienti") +
-					" su " + (patientsToEdit == 1 ? "uno trovato" : patientsToEdit + " trovati")
-				);
 		}
+		if (errorsWhileEditing > 0)
+			throw new DatabaseException(
+				"errori nell'aggiornamento del medico di riferimento dei pazienti",
+				"non aggiornat" + (errorsWhileEditing == 1 ? "o un paziente" : "i " + errorsWhileEditing + " pazienti") +
+				" su " + (patientsToEdit == 1 ? "uno trovato" : patientsToEdit + " trovati")
+			);
 	}
 	
 	

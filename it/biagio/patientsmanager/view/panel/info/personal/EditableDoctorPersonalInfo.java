@@ -34,9 +34,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import org.jdatepicker.impl.UtilDateModel;
+
 import it.biagio.patientsmanager.model.entities.info.personal.APersonalInfo;
 import it.biagio.patientsmanager.model.entities.info.personal.DoctorPersonalInfo;
-import it.biagio.patientsmanager.utils.DateConverter;
 import it.biagio.patientsmanager.view.Const;
 
 
@@ -77,7 +78,7 @@ public class EditableDoctorPersonalInfo extends AEditablePersonalInfo
 		return new DoctorPersonalInfo(
 			surnameValue.getText(),
 			nameValue.getText(),
-			DateConverter.stringToDate(birthdateValue.getText()),
+			((UtilDateModel) birthdateValue.getModel()).getValue(),
 			maleValue.isSelected(),
 			taxcodeValue.getText(),
 			specializationValue.getText()
