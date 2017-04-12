@@ -73,11 +73,11 @@ public class MedicalRecordInfo extends AInfo
 	 * @throws IllegalArgumentException - if type is null or empty
 	 */
 	public void setType(String type) throws IllegalArgumentException {
-		if (isEmptyString(type))
+		this.type = trim(type);
+		if (this.type.isEmpty())
 			throw new IllegalArgumentException(
 				"tipologia della cartella non presente"
 			);
-		this.type = type;
 	}
 	
 	/**
@@ -87,11 +87,11 @@ public class MedicalRecordInfo extends AInfo
 	 * @throws IllegalArgumentException - if number is null or empty
 	 */
 	public void setNumber(String number) throws IllegalArgumentException {
-		if (isEmptyString(number))
+		this.number = trim(number);
+		if (this.number.isEmpty())
 			throw new IllegalArgumentException(
 				"numero della cartella clinica non presente"
 			);
-		this.number = number.toUpperCase();
 	}
 	
 	/**

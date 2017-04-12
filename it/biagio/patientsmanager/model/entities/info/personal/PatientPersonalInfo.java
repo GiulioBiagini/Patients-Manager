@@ -84,11 +84,11 @@ public class PatientPersonalInfo extends APersonalInfo
 	 */
 	@Override
 	public void setTaxcode(String taxcode) {
-		if (isEmptyString(taxcode))
+		this.taxcode = trim(taxcode).toUpperCase();
+		if (this.taxcode.isEmpty())
 			throw new IllegalArgumentException(
 				"codice fiscale non presente"
 			);
-		this.taxcode = taxcode.toUpperCase();
 	}
 	
 	/**
@@ -98,11 +98,11 @@ public class PatientPersonalInfo extends APersonalInfo
 	 * @throws IllegalArgumentException - if profession is null
 	 */
 	public void setProfession(String profession) {
-		if (isEmptyString(profession))
+		this.profession = trim(profession);
+		if (this.profession.isEmpty())
 			throw new IllegalArgumentException(
 				"professione non presente"
 			);
-		this.profession = profession;
 	}
 	
 	

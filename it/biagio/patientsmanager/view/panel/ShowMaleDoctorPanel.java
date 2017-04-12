@@ -73,7 +73,7 @@ public class ShowMaleDoctorPanel extends APanel
 	public void setDoctor(Doctor doctor) {
 		if (doctor != null) {
 			DoctorPersonalInfo doctorPersonalInfo = doctor.getPersonalInfo();
-			setTitle(doctorPersonalInfo.getName() + " " + doctorPersonalInfo.getSurname());
+			setTitle(doctorPersonalInfo.getSurname() + " " + doctorPersonalInfo.getName());
 			uneditableAccountInfo.setAccountInfo(doctor.getAccountInfo());
 			uneditableDoctorPersonalInfo.setPersonalInfo(doctorPersonalInfo);
 			uneditableAddressInfo.setAddressInfo(doctor.getAddressInfo());

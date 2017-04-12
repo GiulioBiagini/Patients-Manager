@@ -308,27 +308,26 @@ public class MainFrame extends JFrame implements ListsPanelObserver, OperationsP
 	public void onConfirm() {
 		try {
 			Component displayedComponent = middlePanel.getComponent(1);
-			if (displayedComponent.equals(addPatientPanel)) {
-				if (observer != null)
-					observer.onAddPatient(addPatientPanel.getPatient());
-			} else if (displayedComponent.equals(addDoctorPanel)) {
-				if (observer != null)
-					observer.onAddDoctor(addDoctorPanel.getDoctor());
-			} else if (displayedComponent.equals(editPatientPanel)) {
-				if (observer != null)
-					observer.onEditPatient(listsPanel.getSelectedPatient(), editPatientPanel.getPatient());
-			} else if (displayedComponent.equals(editDoctorPanel)) {
-				if (observer != null)
-					observer.onEditDoctor(listsPanel.getSelectedDoctor(), editDoctorPanel.getDoctor());
-			} else if (displayedComponent.equals(deletePatientPanel)) {
-				if (observer != null)
-					observer.onDeletePatient(listsPanel.getSelectedPatient());
-			} else if (
+			if (displayedComponent.equals(addPatientPanel) && observer != null)
+				observer.onAddPatient(addPatientPanel.getPatient());
+			else if (displayedComponent.equals(addDoctorPanel) && observer != null)
+				observer.onAddDoctor(addDoctorPanel.getDoctor());
+			else if (displayedComponent.equals(editPatientPanel) && observer != null)
+				observer.onEditPatient(listsPanel.getSelectedPatient(), editPatientPanel.getPatient());
+			else if (displayedComponent.equals(editDoctorPanel) && observer != null)
+				observer.onEditDoctor(listsPanel.getSelectedDoctor(), editDoctorPanel.getDoctor());
+			else if (
+				displayedComponent.equals(deletePatientPanel) &&
+				MessageFactory.questionDialog(this, "Eliminare definitivamente il paziente?") &&
+				observer != null
+			)
+				observer.onDeletePatient(listsPanel.getSelectedPatient());
+			else if (
 				displayedComponent.equals(deleteDoctorPanel) &&
 				MessageFactory.questionDialog(this, "L'eliminazione di questo medico comporterà l'aggiornamento del campo" + LINE_SEPARATOR +
 					"\"Medico di riferimento\" dei pazienti che lo usavano come riferimento." + LINE_SEPARATOR +
 					"Il nuovo valore sarà impostato a \"nessun medico di riferimento\"." + LINE_SEPARATOR +
-					"Eliminare il medico?") &&
+					"Eliminare definitivamente il medico?") &&
 				observer != null
 			)
 				observer.onDeleteDoctor(listsPanel.getSelectedDoctor());

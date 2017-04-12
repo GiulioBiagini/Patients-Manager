@@ -72,7 +72,7 @@ public class EditDoctorPanel extends APanel
 	public void setDoctor(Doctor doctor) {
 		if (doctor != null) {
 			DoctorPersonalInfo doctorPersonalInfo = doctor.getPersonalInfo();
-			setTitle(doctorPersonalInfo.getName() + " " + doctorPersonalInfo.getSurname());
+			setTitle(doctorPersonalInfo.getSurname() + " " + doctorPersonalInfo.getName());
 			editableDoctorPersonalInfo.setPersonalInfo(doctorPersonalInfo);
 			editableAddressInfo.setAddressInfo(doctor.getAddressInfo());
 			editableContactsInfo.setContactsInfo(doctor.getContactsInfo());

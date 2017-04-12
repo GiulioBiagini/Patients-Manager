@@ -83,11 +83,11 @@ public abstract class APersonalInfo extends AInfo
 	 * @throws IllegalArgumentException - if surname is null or empty
 	 */
 	public void setSurname(String surname) {
-		if (isEmptyString(surname))
+		this.surname = trim(surname);
+		if (this.surname.isEmpty())
 			throw new IllegalArgumentException(
 				"cognome non presente"
 			);
-		this.surname = surname;
 	}
 	
 	/**
@@ -97,11 +97,11 @@ public abstract class APersonalInfo extends AInfo
 	 * @throws IllegalArgumentException - if name is null or empty
 	 */
 	public void setName(String name) {
-		if (isEmptyString(name))
+		this.name = trim(name);
+		if (this.name.isEmpty())
 			throw new IllegalArgumentException(
 				"nome non presente"
 			);
-		this.name = name;
 	}
 	
 	public abstract void setBirthdate(Date birthdate);

@@ -34,12 +34,17 @@ package it.biagio.patientsmanager.model.entities.info;
 public abstract class AInfo
 {
 	/**
-	 * Check if the given string is empty or composed only of spaces
+	 * Trim the given string
 	 * 
-	 * @param string - the string to check
-	 * @return true if the given string is empty or composed only of spaces
+	 * @param string - the string to trim
+	 * @return the string with no empty spaces at the beginning and at the end,
+	 * if the string is null return an empty string
 	 */
-	protected static boolean isEmptyString(String string) {
-		return string == null || string.replaceAll("\\s","").isEmpty();
+	protected static String trim(String string) {
+		if (string == null)
+			return "";
+		// replace all 2, 3, 4, ecc, occurrence of space cahrs with only one space
+		string = string.trim().replaceAll("\\s{2,}", " ");
+		return string;
 	}
 }

@@ -79,7 +79,7 @@ public class AddressInfo extends AInfo
 	 * @param address - the address
 	 */
 	public void setAddress(String address) {
-		this.address = isEmptyString(address) ? "" : address;
+		this.address = trim(address);
 	}
 	
 	/**
@@ -88,7 +88,7 @@ public class AddressInfo extends AInfo
 	 * @param civicNumber - the civic number
 	 */
 	public void setCivicNumber(String civicNumber) {
-		this.civicNumber = isEmptyString(civicNumber) ? "" : civicNumber;
+		this.civicNumber = trim(civicNumber);
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class AddressInfo extends AInfo
 	 * @param city - the city
 	 */
 	public void setCity(String city) {
-		this.city = isEmptyString(city) ? "" : city;
+		this.city = trim(city);
 	}
 	
 	/**
@@ -106,7 +106,7 @@ public class AddressInfo extends AInfo
 	 * @param zipCode - the zip code
 	 */
 	public void setZipCode(String zipCode) {
-		this.zipCode = isEmptyString(zipCode) ? "" : zipCode;
+		this.zipCode = trim(zipCode);
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public class AddressInfo extends AInfo
 	 * @param province - the province
 	 */
 	public void setProvince(String province) {
-		this.province = isEmptyString(province) ? "" : province;
+		this.province = trim(province);
 	}
 	
 	

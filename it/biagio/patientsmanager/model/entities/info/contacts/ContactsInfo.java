@@ -64,7 +64,7 @@ public class ContactsInfo extends AInfo
 	 * @param telephoneNumber - the telephone number
 	 */
 	public void setTelephoneNumber(String telephoneNumber) {
-		this.telephoneNumber = isEmptyString(telephoneNumber) ? "" : telephoneNumber;
+		this.telephoneNumber = trim(telephoneNumber);
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class ContactsInfo extends AInfo
 	 * @param mobileNumber - the mobile number
 	 */
 	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = isEmptyString(mobileNumber) ? "" : mobileNumber;
+		this.mobileNumber = trim(mobileNumber);
 	}
 	
 	

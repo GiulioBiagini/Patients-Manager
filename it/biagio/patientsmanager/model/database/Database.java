@@ -33,6 +33,7 @@ import java.util.HashMap;
 
 import it.biagio.patientsmanager.model.entities.Doctor;
 import it.biagio.patientsmanager.model.entities.Patient;
+import it.biagio.patientsmanager.model.entities.info.personal.DoctorPersonalInfo;
 import it.biagio.patientsmanager.utils.DoctorsOrderedList;
 import it.biagio.patientsmanager.utils.PatientsOrderedList;
 
@@ -99,7 +100,12 @@ public class Database
 	 * @return the id of the doctor, null if the doctor is null
 	 */
 	private static final String getDoctorId(Doctor doctor) {
-		return doctor == null ? null : doctor.getPersonalInfo().getSurname() + "_" + doctor.getPersonalInfo().getName();
+		if (doctor == null)
+			return null;
+		else {
+			DoctorPersonalInfo doctorPersonalInfo = doctor.getPersonalInfo();
+			return (doctorPersonalInfo.getSurname() + " " + doctorPersonalInfo.getName()).replaceAll("\\s+", "_").toUpperCase();
+		}
 	}
 	
 	

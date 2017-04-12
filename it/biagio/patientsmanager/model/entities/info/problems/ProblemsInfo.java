@@ -59,7 +59,7 @@ public class ProblemsInfo extends AInfo
 	 * @param heartProblems - the heart problems
 	 */
 	public void setHeartProblems(String heartProblems) {
-		this.heartProblems = isEmptyString(heartProblems) ? "" : heartProblems;
+		this.heartProblems = trim(heartProblems);
 	}
 	
 	

@@ -88,7 +88,7 @@ public class ShowMalePatientPanel extends APanel
 	public void setPatient(Patient patient) {
 		if (patient != null) {
 			PatientPersonalInfo patientPersonalInfo = patient.getPersonalInfo();
-			setTitle(patientPersonalInfo.getName() + " " + patientPersonalInfo.getSurname());
+			setTitle(patientPersonalInfo.getSurname() + " " + patientPersonalInfo.getName());
 			uneditableAccountInfo.setAccountInfo(patient.getAccountInfo());
 			uneditablePatientPersonalInfo.setPersonalInfo(patientPersonalInfo);
 			uneditableMedicalRecordInfo.setMedicalRecordInfo(patient.getMedicalRecordInfo());

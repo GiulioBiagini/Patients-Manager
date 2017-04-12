@@ -88,7 +88,7 @@ public class EditPatientPanel extends APanel
 	public void setPatient(Patient patient) {
 		if (patient != null) {
 			PatientPersonalInfo patientPersonalInfo = patient.getPersonalInfo();
-			setTitle(patientPersonalInfo.getName() + " " + patientPersonalInfo.getSurname());
+			setTitle(patientPersonalInfo.getSurname() + " " + patientPersonalInfo.getName());
 			editablePatientPersonalInfo.setPersonalInfo(patientPersonalInfo);
 			editableMedicalRecordInfo.setMedicalRecordInfo(patient.getMedicalRecordInfo());
 			editableAddressInfo.setAddressInfo(patient.getAddressInfo());

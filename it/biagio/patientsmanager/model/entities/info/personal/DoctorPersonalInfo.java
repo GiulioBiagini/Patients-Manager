@@ -77,7 +77,7 @@ public class DoctorPersonalInfo extends APersonalInfo
 	 */
 	@Override
 	public void setTaxcode(String taxcode) {
-		this.taxcode = isEmptyString(taxcode) ? "" : taxcode.toUpperCase();
+		this.taxcode = trim(taxcode).toUpperCase();
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class DoctorPersonalInfo extends APersonalInfo
 	 * @param specialization - the specialization
 	 */
 	public void setSpecialization(String specialization) {
-		this.specialization = isEmptyString(specialization) ? "" : specialization;
+		this.specialization = trim(specialization);
 	}
 	
 	
