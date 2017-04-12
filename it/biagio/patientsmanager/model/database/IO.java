@@ -104,28 +104,28 @@ public class IO
 			bufferedWriter.write(DateConverter.dateTimeToString(accountInfo.getCreationDate()) + LINE_SEPARATOR);
 			// personal info
 			PatientPersonalInfo personalInfo = patient.getPersonalInfo();
-			bufferedWriter.write(personalInfo.getSurname().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(personalInfo.getName().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getSurname() + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getName() + LINE_SEPARATOR);
 			bufferedWriter.write(DateConverter.dateToString(personalInfo.getBirthdate()) + LINE_SEPARATOR);
 			bufferedWriter.write((personalInfo.isMale() ? MALE : FEMALE) + LINE_SEPARATOR);
-			bufferedWriter.write(personalInfo.getTaxcode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(personalInfo.getProfession().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getTaxcode() + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getProfession() + LINE_SEPARATOR);
 			// medical record info
 			MedicalRecordInfo medicalRecordInfo = patient.getMedicalRecordInfo();
-			bufferedWriter.write(medicalRecordInfo.getType().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(medicalRecordInfo.getNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(medicalRecordInfo.getType() + LINE_SEPARATOR);
+			bufferedWriter.write(medicalRecordInfo.getNumber() + LINE_SEPARATOR);
 			bufferedWriter.write(DateConverter.dateToString(medicalRecordInfo.getLastVisitDate()) + LINE_SEPARATOR);
 			// address info
 			AddressInfo addressInfo = patient.getAddressInfo();
-			bufferedWriter.write(addressInfo.getAddress().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(addressInfo.getCivicNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(addressInfo.getCity().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(addressInfo.getZipCode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(addressInfo.getProvince().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getAddress() + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getCivicNumber() + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getCity() + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getZipCode() + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getProvince() + LINE_SEPARATOR);
 			// contacts info
 			ContactsInfo contactsInfo = patient.getContactsInfo();
-			bufferedWriter.write(contactsInfo.getTelephoneNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(contactsInfo.getMobileNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(contactsInfo.getTelephoneNumber() + LINE_SEPARATOR);
+			bufferedWriter.write(contactsInfo.getMobileNumber() + LINE_SEPARATOR);
 			// doctor info
 			bufferedWriter.write((referringPhysicianId == null ? "" : referringPhysicianId) + LINE_SEPARATOR);
 			// problems info
@@ -166,23 +166,23 @@ public class IO
 			bufferedWriter.write(DateConverter.dateTimeToString(accountInfo.getCreationDate()) + LINE_SEPARATOR);
 			// personal info
 			DoctorPersonalInfo personalInfo = doctor.getPersonalInfo();
-			bufferedWriter.write(personalInfo.getSurname().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(personalInfo.getName().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getSurname() + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getName() + LINE_SEPARATOR);
 			bufferedWriter.write(DateConverter.dateToString(personalInfo.getBirthdate()) + LINE_SEPARATOR);
 			bufferedWriter.write((personalInfo.isMale() ? MALE : FEMALE) + LINE_SEPARATOR);
-			bufferedWriter.write(personalInfo.getTaxcode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(personalInfo.getSpecialization().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getTaxcode() + LINE_SEPARATOR);
+			bufferedWriter.write(personalInfo.getSpecialization() + LINE_SEPARATOR);
 			// address info
 			AddressInfo addressInfo = doctor.getAddressInfo();
-			bufferedWriter.write(addressInfo.getAddress().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(addressInfo.getCivicNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(addressInfo.getCity().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(addressInfo.getZipCode().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(addressInfo.getProvince().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getAddress() + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getCivicNumber() + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getCity() + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getZipCode() + LINE_SEPARATOR);
+			bufferedWriter.write(addressInfo.getProvince() + LINE_SEPARATOR);
 			// contacts info
 			ContactsInfo contactsInfo = doctor.getContactsInfo();
-			bufferedWriter.write(contactsInfo.getTelephoneNumber().replace("\r", "").replace("\n", "") + LINE_SEPARATOR);
-			bufferedWriter.write(contactsInfo.getMobileNumber().replace("\r", "").replace("\n", ""));
+			bufferedWriter.write(contactsInfo.getTelephoneNumber() + LINE_SEPARATOR);
+			bufferedWriter.write(contactsInfo.getMobileNumber());
 			
 			bufferedWriter.close();
 		} catch (IllegalArgumentException ex) {
