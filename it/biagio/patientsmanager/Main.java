@@ -43,7 +43,6 @@ import it.biagio.patientsmanager.view.MainFrameObserver;
 
 public class Main implements MainFrameObserver
 {
-	
 	private MainFrame mainFrame;
 	
 	
